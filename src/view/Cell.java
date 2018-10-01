@@ -39,9 +39,12 @@ public class Cell extends JLabel {
 
 	    }
 	 
+	 
 	 /**
 	  * sets the int value to the cell
 	  * and set up the color depending on id help is turned on
+	  * @param num a number from user to check
+	  * @param userInput check if number is a i=user input or not
 	  */
 	 public void setValue (int num, boolean userInput){
 		 setText(num > 0 ? num + "" : "");
