@@ -1,4 +1,7 @@
 package model;
+
+import java.util.Random;
+
 /**
  * Generates a new sudoku solution
  * user input
@@ -6,9 +9,10 @@ package model;
  *
  */
 public class Game {
-	
+	static final int SIZE = 9;
 	private int[][] solution; //pre-defined 2-D array solution
 	private int[][] game; //current game; created after shuffling solution;
+	private int[][] userInput;
 	
 	private boolean help;
 	private int score;
@@ -18,16 +22,27 @@ public class Game {
 	 * Constructor
 	 */
 	public Game(){
-		newGame();
+		solution = newGame(); // gets new solution board
 		help = false;
+		userInput = new int[SIZE][SIZE];
 	}
 	
-	/**
-	 * creates a new solvable board solution by shuffling the predefined one
-	 */
-	public void newGame(){
+	
+	public int[][] newGame(){
 		
+		SolutionCreator aSolution = new SolutionCreator();
+		return aSolution.getSolution();
+		
+
 	}
+	
+	
+	public int[][] shuffleGame(int[][] aGame){
+		Random random = new Random();
+		//int x = random.nextInt(3)
+		return null;
+	}
+	
 	
 	/**
 	 * checks the user input with the correct solution
@@ -76,5 +91,7 @@ public class Game {
 		return newGame;
 		
 	}
+	
+
 
 }
