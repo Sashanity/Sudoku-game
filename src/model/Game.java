@@ -114,5 +114,4 @@ public class Game extends Observable {
 
 		// notify the observer here to show in colors
 	}
-
 }
