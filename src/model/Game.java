@@ -54,13 +54,17 @@ public class Game extends Observable {
 			randCol = new Random().nextInt(SIZE);
 
 			value = solution[randRow][randCol];
-			// System.out.println("Chosen number "+ i +": " + "solution["+
-			// randRow+"]["+randCol+"] = " +value);
-			setValue(value, randRow, randCol);
+			System.out.println("Chosen number " + i + ": " + "solution[" + randRow + "][" + randCol + "] = " + value);
+			if (getGame()[randRow][randCol] == 0)
+				setValue(value, randRow, randCol);
+			else {
+				System.out.println(
+						"Number solution[" + randRow + "][" + randCol + "] = " + value + " was already chosen");
+				i--;
+			}
+
 		}
-
 		return getGame();
-
 	}
 
 	public int[][] getGame() {
