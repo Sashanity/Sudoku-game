@@ -15,7 +15,8 @@ public class Game extends Observable {
 	static final int MIN_NUM_CLUES = 17;
 	private int[][] solution;
 	private int[][] game; // current game; created after shuffling solution;
-	private int[][] userInput;
+	// private int[][] userInput;
+	private boolean[][] checkGame;
 
 	private boolean help;
 	private int score;
@@ -28,21 +29,18 @@ public class Game extends Observable {
 		game = newGame();
 
 		help = false;
-		userInput = new int[SIZE][SIZE];
+		// userInput = new int[SIZE][SIZE];
 	}
 
 	public int[][] newGame() {
 		SolutionCreator aSolution = new SolutionCreator();
 		this.solution = aSolution.getSolution();
 		/*
-		System.out.println("Solution for the game:");
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-
-				System.out.print(solution[i][j]);
-			}
-			System.out.println("");
-		}*/
+		 * System.out.println("Solution for the game:"); for (int i = 0; i < 9; i++) {
+		 * for (int j = 0; j < 9; j++) {
+		 * 
+		 * System.out.print(solution[i][j]); } System.out.println(""); }
+		 */
 		int randCol, randRow, value;
 
 		// first zero the game
@@ -104,20 +102,16 @@ public class Game extends Observable {
 		return help;
 	}
 
-	/**
-	 * Clones the predefined solution to the tmp 2D array
-	 * 
-	 * @param solution is predefined 2D array
-	 * @return returns copy of the predefined solution
-	 */
-	public int[][] cloneSolution(int[][] solution) {
-		int[][] newGame = null;
-		for (int i = 0; i < 9; i++)
-			for (int j = 0; j < 9; j++)
-				newGame[i][j] = solution[i][j];
-
-		return newGame;
-
+	private void gameCheck() {
+		for (int i = 0; i < SIZE; i++)
+			for (int j = 0; j < SIZE; j++)
+				checkGame[i][j] = game[i][j] == solution[i][j];
 	}
 
+	public void runGameCheck() {
+		gameCheck(); // creates boolean array, values are result of comparing of current game to
+						// solution
+
+		// notify the observer here to show in colors
+	}
 }
