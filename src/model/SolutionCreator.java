@@ -11,12 +11,12 @@ public class SolutionCreator {
 		firstBoard = new int[SIZE][SIZE];
 		createBoard();
 
-		for (int i = 0; i < SIZE; i++) {
+		/*for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				System.out.print(firstBoard[i][j]);
 			}
 			System.out.println("");
-		}
+		}*/
 
 		shuffleBoard(firstBoard);
 

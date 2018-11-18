@@ -8,14 +8,41 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonController implements ActionListener{
-	
-	
+import model.Game;
+import view.ButtonPad;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+public class ButtonController {
+	private ButtonPad buttonPad;
+	private Game game;
+	public ButtonController(ButtonPad buttonPad, Game game) {
+		this.buttonPad = buttonPad;
+		this.game = game;
 	}
+	
+	public void update() {
+		buttonPad.getNewGameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				game.newGame();
+				System.out.println("NEW GAME");
+				/*System.out.println("Created game:");
+				for (int i = 0; i < 9; i++) {
+					for (int j = 0; j < 9; j++) {
+
+						System.out.print(game.getGame()[i][j]);
+					}
+					System.out.println("");
+				}*/
+			}
+		});
+		
+		buttonPad.getExitButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("EXIT");
+				System.exit(0);
+			}
+		});
+	}
+
+	
 
 }
