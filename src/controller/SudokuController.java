@@ -14,9 +14,10 @@ import java.awt.event.ActionListener;
 
 import model.Game;
 import view.Board;
+import view.SudokuBoard;
 public class SudokuController implements ActionListener{
 	
-	private Board sudokuBoard;
+	private SudokuBoard sudokuBoard;
 	private Game game;
 	
 	/**
@@ -24,7 +25,7 @@ public class SudokuController implements ActionListener{
 	 * @param sudokuBoard the current board
 	 * @param game is the numerical board situation
 	 */
-	 public SudokuController(Board sudokuBoard, Game game) {
+	 public SudokuController(SudokuBoard sudokuBoard, Game game) {
 		 this.sudokuBoard = sudokuBoard;
 		 this.game = game;
 		 
@@ -32,6 +33,11 @@ public class SudokuController implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}

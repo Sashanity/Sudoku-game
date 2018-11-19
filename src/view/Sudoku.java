@@ -42,11 +42,15 @@ public class Sudoku extends JFrame {
 		Game game = new Game();
 
 		ButtonPad buttonPanel = new ButtonPad();
+		SudokuBoard sudokuBoard = new SudokuBoard();
+		
 		ButtonController buttonController = new ButtonController(buttonPanel, game);
 		buttonController.update();
+		
+	
 	
 		add(buttonPanel, BorderLayout.WEST);
-		add( new SudokuBoard(), BorderLayout.EAST);
+		add(sudokuBoard, BorderLayout.EAST);
 
 		game.addObserver(buttonPanel);
 		
