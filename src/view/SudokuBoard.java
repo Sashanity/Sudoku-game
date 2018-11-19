@@ -3,6 +3,10 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,7 +23,6 @@ import model.Game;
 
 public class SudokuBoard extends JPanel implements Observer {
 	public static final int SIZE = 3;
-
 	private Cell[][] cells;
 	private JPanel[][] subBoards;
 
@@ -40,7 +43,7 @@ public class SudokuBoard extends JPanel implements Observer {
 
 			}
 		}
-
+		
 		cells = new Cell[9][9];
 		for (int row = 0; row < 9; row++) {
 			for (int col = 0; col < 9; col++) {

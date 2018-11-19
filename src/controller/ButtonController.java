@@ -41,6 +41,22 @@ public class ButtonController {
 				System.exit(0);
 			}
 		});
+		buttonPad.getSolutionButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Show Solution");
+			}
+		});
+		buttonPad.getHelpButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Help toggled");
+			}
+		});
+		buttonPad.getSubmitButton().addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Input Submitted");
+			}
+		});
+		
 	}
 
 	

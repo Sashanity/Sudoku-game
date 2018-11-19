@@ -16,9 +16,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-public class ButtonPad extends JPanel implements Observer{
+public class ButtonPad extends JPanel implements Observer {
 
-	private JButton solutionButton, newGameButton, exitButton; // buttons used in the game.
+	private JButton solutionButton, newGameButton, exitButton, submitButton; // buttons used in the game.
 	private JCheckBox helpButton;
 	private ButtonGroup keypad;
 	private JToggleButton[] keypadNumbers;
@@ -40,53 +40,58 @@ public class ButtonPad extends JPanel implements Observer{
 
 		solutionButton = new JButton("Solution");
 		solutionButton.setPreferredSize(new Dimension(100, 30));
+		solutionButton.setToolTipText("See the solution!");
 
-		exitButton = new JButton(" Exit");
+		exitButton = new JButton("Exit");
 		exitButton.setPreferredSize(new Dimension(100, 30));
+
+		submitButton = new JButton("Submit");
+		submitButton.setPreferredSize(new Dimension(100, 30));
+		submitButton.setToolTipText("Check if your input is correct!");
 
 		panelGameOptions.add(newGameButton);
 		panelGameOptions.add(solutionButton);
+		panelGameOptions.add(submitButton);
 		panelGameOptions.add(exitButton);
 
 		helpButton = new JCheckBox("Help", false);
 		helpButton.setBackground(Color.green);
-		helpButton.setPreferredSize(new Dimension(50, 30));
+		helpButton.setPreferredSize(new Dimension(75, 30));
 		panelGameOptions.add(helpButton);
-/*
-		JPanel panelNumbers = new JPanel();
-		panelNumbers.setLayout(new FlowLayout(FlowLayout.CENTER));
+		/*
+		 * JPanel panelNumbers = new JPanel(); panelNumbers.setLayout(new
+		 * FlowLayout(FlowLayout.CENTER));
+		 * panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers"));
+		 * aPanel.add(panelNumbers);
+		 */
+		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
 		panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers"));
 		aPanel.add(panelNumbers);
-*/
-		JPanel panelNumbers = new JPanel(new GridLayout(3,3));
-		panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers")); 
-		aPanel.add(panelNumbers);
 
-		//panelNumbers.add(helpButton); // maybe put help in diff position
+		// panelNumbers.add(helpButton); // maybe put help in diff position
 		keypad = new ButtonGroup();
 		keypadNumbers = new JToggleButton[9];
 
 		for (int i = 0; i < 9; i++) {
 			keypadNumbers[i] = new JToggleButton("" + (i + 1));
-			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
+			keypadNumbers[i].setPreferredSize(new Dimension(50, 120));
 			keypad.add(keypadNumbers[i]);
 			panelNumbers.add(keypadNumbers[i]);
 		}
 
 	}
-	
+
 	public JButton getSolutionButton() {
 		return solutionButton;
 	}
-	
+
 	public JButton getNewGameButton() {
 		return newGameButton;
 	}
-	
+
 	public JButton getExitButton() {
 		return exitButton;
 	}
-
 
 	public JCheckBox getHelpButton() {
 		return helpButton;
@@ -95,14 +100,17 @@ public class ButtonPad extends JPanel implements Observer{
 	public ButtonGroup getKeypad() {
 		return keypad;
 	}
+	public JButton getSubmitButton() {
+		return submitButton;
+	}
 
 	public JToggleButton[] getKeypadNumbers() {
 		return keypadNumbers;
 	}
-	
+
 	public void update(Observable o, Object obj) {
-		
-		//update observer
+
+		// update observer
 	}
 
 }
