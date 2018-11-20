@@ -27,6 +27,7 @@ public class Game extends Observable {
 	/**
 	 * Constructor
 	 */
+	
 	public Game() {
 		game = new int[SIZE][SIZE];
 		game = newGame();

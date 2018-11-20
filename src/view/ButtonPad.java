@@ -59,6 +59,7 @@ public class ButtonPad extends JPanel implements Observer {
 		helpButton = new JCheckBox("Help", false);
 		helpButton.setBackground(Color.green);
 		helpButton.setPreferredSize(new Dimension(75, 30));
+		helpButton.setToolTipText("Toggle on to see which cells are correct/incorrect");
 		panelGameOptions.add(helpButton);
 		/*
 		 * JPanel panelNumbers = new JPanel(); panelNumbers.setLayout(new

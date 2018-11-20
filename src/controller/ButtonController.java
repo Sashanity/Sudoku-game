@@ -1,5 +1,5 @@
 package controller;
-
+import controller.SudokuController;
 import java.awt.Color;
 import java.awt.Dimension;
 /**
@@ -34,7 +34,7 @@ public class ButtonController {
 	public void update() {
 		buttonPad.getNewGameButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game = new Game();
+				sudoku.update();
 				System.out.println("NEW GAME");
 				/*
 				 * System.out.println("Created game:"); for (int i = 0; i < 9; i++) { for (int j

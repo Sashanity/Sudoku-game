@@ -23,7 +23,10 @@ public class Sudoku extends JFrame{
 
 	// add everything such creating the window, board, buttons etc
 	// add visability
-
+	private SudokuBoard sudokuBoard;
+	private Game game;
+	private ButtonController buttonController;
+	private ButtonPad buttonPanel;
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -34,16 +37,17 @@ public class Sudoku extends JFrame{
 
 	}
 
+
 	public Sudoku() {
 
 		super("SUDOKU");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 		
-		Game game = new Game();
+		game = new Game();
 
-		ButtonPad buttonPanel = new ButtonPad();
-		SudokuBoard sudokuBoard = new SudokuBoard();
+		buttonPanel = new ButtonPad();
+		sudokuBoard = new SudokuBoard();
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
 				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
@@ -56,7 +60,7 @@ public class Sudoku extends JFrame{
 			}
 		}
 		
-		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
+		buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
 		buttonController.update();
 		
 	
@@ -71,5 +75,27 @@ public class Sudoku extends JFrame{
 		setVisible(true);
 
 	}
-
+	public Game getGame() {
+		return game;
+	}
+	public void update()
+	{
+		game = new Game();
+		for(int i = 0; i < 9; i++) {
+			for(int j = 0; j < 9; j++) {
+				sudokuBoard.getCells()[i][j].accessible = true;
+				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
+				sudokuBoard.getSolution()[i][j].setValue(game.getSolution()[i][j], false);
+				sudokuBoard.getCells()[i][j].setBackground(Color.WHITE);
+				if(game.getGame()[i][j] != 0)
+				{
+					sudokuBoard.getCells()[i][j].accessible = false;
+					sudokuBoard.getCells()[i][j].setBackground(Color.ORANGE);
+				}
+			}
+		}
+		buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
+		buttonController.update();
+	}
+	
 }
