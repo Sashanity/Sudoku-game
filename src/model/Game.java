@@ -98,6 +98,10 @@ public class Game extends Observable {
 	public void setHelp(boolean help) {
 		this.help = help;
 	}
+	public int[][] getSolution()
+	{
+		return solution;
+	}
 
 	/**
 	 * Checks if user asked for help

@@ -10,6 +10,7 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import controller.ButtonController;
 import controller.SudokuController;
 import model.Game;
 
-public class Sudoku extends JFrame {
+public class Sudoku extends JFrame{
 
 	// add everything such creating the window, board, buttons etc
 	// add visability
@@ -46,6 +47,7 @@ public class Sudoku extends JFrame {
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
 				sudokuBoard.getCells()[i][j].setText("" + game.getGame()[i][j]);
+				sudokuBoard.getSolution()[i][j].setText("" + game.getSolution()[i][j]);
 				if(game.getGame()[i][j] != 0)
 				{
 					sudokuBoard.getCells()[i][j].accessible = false;

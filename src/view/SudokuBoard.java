@@ -24,6 +24,7 @@ import model.Game;
 public class SudokuBoard extends JPanel implements Observer {
 	public static final int SIZE = 3;
 	private Cell[][] cells;
+	private Cell[][] solution;
 	private JPanel[][] subBoards;
 
 	public SudokuBoard() {
@@ -43,10 +44,11 @@ public class SudokuBoard extends JPanel implements Observer {
 
 			}
 		}
-		
+		solution = new Cell[9][9];
 		cells = new Cell[9][9];
 		for (int row = 0; row < 9; row++) {
 			for (int col = 0; col < 9; col++) {
+				solution[row][col] = new Cell(col, row);
 				cells[row][col] = new Cell(col, row);
 				subBoards[row / 3][col / 3].add(cells[row][col]);
 			}
@@ -58,7 +60,10 @@ public class SudokuBoard extends JPanel implements Observer {
 	{
 		return cells;
 	}
-
+	public Cell[][] getSolution()
+	{
+		return solution;
+	}
 	public Cell getSelected()
 	{
 		Cell selected = null;

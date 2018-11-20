@@ -14,17 +14,20 @@ import javax.swing.JToggleButton;
 
 import model.Game;
 import view.ButtonPad;
+import view.Sudoku;
 import view.SudokuBoard;
 
 public class ButtonController {
 	private SudokuBoard sudokuBoard;
 	private ButtonPad buttonPad;
 	private Game game;
+	private Sudoku sudoku;
 
 	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
 		this.buttonPad = buttonPad;
 		this.game = game;
 		this.sudokuBoard = sudokuBoard;
+		this.sudoku = sudoku;
 	}
 
 	public void update() {
@@ -49,6 +52,11 @@ public class ButtonController {
 		});
 		buttonPad.getSolutionButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for (int j = 0; j < 9; j++)
+					for (int k = 0; k < 9; k++) {
+						Integer number = Integer.parseInt(sudokuBoard.getSolution()[j][k].getText());
+						sudokuBoard.getCells()[j][k].setValue(number, false);
+					}
 				System.out.println("Show Solution");
 			}
 		});
