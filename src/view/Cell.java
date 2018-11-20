@@ -24,6 +24,9 @@ import javax.swing.JLabel;
 public class Cell extends JLabel {
 	private int x;
 	private int y;
+	private int value;
+	boolean isSelected;
+	boolean accessible = true;
 
 	public Cell(int x, int y) {
 		super("", CENTER);
@@ -36,9 +39,17 @@ public class Cell extends JLabel {
 		setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 		setOpaque(true);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		addMouseListener(new MouseAdapter() {//makes background of cell gray to signify that it is selected
+		addMouseListener(new MouseAdapter() {// makes background of cell gray to signify that it is selected
 			public void mouseClicked(MouseEvent event) {
-				setBackground(Color.GRAY);
+				if (getBackground().equals(Color.WHITE)) {
+					setBackground(Color.gray);
+					isSelected = true;
+					System.out.println(isSelected);
+				} else if (getBackGround().equals(Color.GRAY)) {
+					setBackground(Color.WHITE);
+					isSelected = false;
+					System.out.println(isSelected);
+				}
 			}
 		});
 	}
@@ -48,12 +59,23 @@ public class Cell extends JLabel {
 		setText(num > 0 ? num + "" : "");
 	}
 
+	public Color getBackGround() {
+		return this.getBackground();
+	}
+
 	public int getCellX() {
 		return x;
 	}
 
 	public int getCellY() {
 		return y;
+	}
+
+	public boolean isSelected() {//need to figure out how to make it possible for only one Cell to be selected at a time
+		return isSelected;
+	}
+	public boolean isAccessible() {
+		return accessible;
 	}
 
 }

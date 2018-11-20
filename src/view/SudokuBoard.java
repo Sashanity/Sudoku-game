@@ -54,9 +54,24 @@ public class SudokuBoard extends JPanel implements Observer {
 
 	}
 
-	
-	
+	public Cell[][] getCells()
+	{
+		return cells;
+	}
 
+	public Cell getSelected()
+	{
+		Cell selected = null;
+		for(int i = 0; i < 9 ; i++)
+		{
+			for(int j = 0; j < 0 ; j++)
+			{
+				if(cells[i][j].isSelected)
+					selected = cells[i][j];
+			}
+		}
+		return selected;
+	}
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub

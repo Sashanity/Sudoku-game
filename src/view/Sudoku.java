@@ -43,8 +43,18 @@ public class Sudoku extends JFrame {
 
 		ButtonPad buttonPanel = new ButtonPad();
 		SudokuBoard sudokuBoard = new SudokuBoard();
+		for(int i = 0; i < 9; i++) {
+			for(int j = 0; j < 9; j++) {
+				sudokuBoard.getCells()[i][j].setText("" + game.getGame()[i][j]);
+				if(game.getGame()[i][j] != 0)
+				{
+					sudokuBoard.getCells()[i][j].accessible = false;
+					sudokuBoard.getCells()[i][j].setBackground(Color.ORANGE);
+				}
+			}
+		}
 		
-		ButtonController buttonController = new ButtonController(buttonPanel, game);
+		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
 		buttonController.update();
 		
 	

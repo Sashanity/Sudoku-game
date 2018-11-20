@@ -3,6 +3,8 @@ package model;
 import java.util.Observable;
 import java.util.Random;
 
+import view.SudokuBoard;
+
 /**
  * Generates a new sudoku solution user input
  * 
@@ -27,7 +29,6 @@ public class Game extends Observable {
 	public Game() {
 		game = new int[SIZE][SIZE];
 		game = newGame();
-
 		help = false;
 		// userInput = new int[SIZE][SIZE];
 	}
@@ -64,6 +65,7 @@ public class Game extends Observable {
 			}
 
 		}
+		
 		return getGame();
 	}
 

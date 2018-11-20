@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.awt.Color;
+
 /**
 
  * Controls and respond to user actions (pressed buttons such as newgame, solutions etc)
@@ -11,6 +13,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import model.Game;
 import view.Board;
