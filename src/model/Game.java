@@ -3,6 +3,7 @@ package model;
 import java.util.Observable;
 import java.util.Random;
 
+import view.Sudoku;
 import view.SudokuBoard;
 
 /**

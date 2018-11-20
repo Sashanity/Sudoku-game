@@ -37,6 +37,7 @@ public class SudokuController implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		game.addObserver(sudokuBoard);
 		// TODO Auto-generated method stub
 		
 	}

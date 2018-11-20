@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.Dimension;
 /**
 
@@ -23,7 +24,7 @@ public class ButtonController {
 	private Game game;
 	private Sudoku sudoku;
 
-	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
+	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard, Sudoku sudoku) {
 		this.buttonPad = buttonPad;
 		this.game = game;
 		this.sudokuBoard = sudokuBoard;
@@ -33,7 +34,7 @@ public class ButtonController {
 	public void update() {
 		buttonPad.getNewGameButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.newGame();
+				game = new Game();
 				System.out.println("NEW GAME");
 				/*
 				 * System.out.println("Created game:"); for (int i = 0; i < 9; i++) { for (int j
@@ -65,28 +66,49 @@ public class ButtonController {
 				if (!game.isHelp()) {
 					game.setHelp(true);
 					System.out.println("Help on");
+					for (int j = 0; j < 9; j++)
+						for (int k = 0; k < 9; k++) {
+							Integer number = Integer.parseInt(sudokuBoard.getSolution()[j][k].getText());
+							if (sudokuBoard.getCells()[j][k].getValue() != number) {
+								sudokuBoard.getCells()[j][k].setBackground(Color.red);
+							}
+							if (sudokuBoard.getCells()[j][k].getValue() == number
+									&& sudokuBoard.getCells()[j][k].isAccessible()) {
+								sudokuBoard.getCells()[j][k].setBackground(Color.GREEN);
+							}
+						}
 				} else if (game.isHelp()) {
 					game.setHelp(false);
 					System.out.println("Help off");
+					for (int j = 0; j < 9; j++)
+						for (int k = 0; k < 9; k++)
+							if (sudokuBoard.getCells()[j][k].getBackground() != Color.WHITE
+									&& sudokuBoard.getCells()[j][k].isAccessible()) {
+								sudokuBoard.getCells()[j][k].setBackground(Color.white);
+							}
+
 				}
 
 			}
 		});
 		buttonPad.getSubmitButton().addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Input Submitted");
 			}
 		});
-		for (int i = 0; i < 9; i++) {//changes displayed number for selected cell
+		for (
+
+				int i = 0; i < 9; i++) {// changes displayed number for selected cell
 			Integer number = Integer.parseInt(buttonPad.getKeypadNumbers()[i].getText());
 			buttonPad.getKeypadNumbers()[i].addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					for (int j = 0; j < 9; j++)
 						for (int k = 0; k < 9; k++) {
-							if (sudokuBoard.getCells()[j][k].isSelected() && sudokuBoard.getCells()[j][k].isAccessible())
+							if (sudokuBoard.getCells()[j][k].isSelected()
+									&& sudokuBoard.getCells()[j][k].isAccessible())
 
 							{
-								//need to figure out how to use this with setValue in Cell class
 								sudokuBoard.getCells()[j][k].setValue(number, true);
 							}
 						}

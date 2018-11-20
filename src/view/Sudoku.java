@@ -46,8 +46,8 @@ public class Sudoku extends JFrame{
 		SudokuBoard sudokuBoard = new SudokuBoard();
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
-				sudokuBoard.getCells()[i][j].setText("" + game.getGame()[i][j]);
-				sudokuBoard.getSolution()[i][j].setText("" + game.getSolution()[i][j]);
+				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
+				sudokuBoard.getSolution()[i][j].setValue(game.getSolution()[i][j], false);
 				if(game.getGame()[i][j] != 0)
 				{
 					sudokuBoard.getCells()[i][j].accessible = false;
@@ -56,7 +56,7 @@ public class Sudoku extends JFrame{
 			}
 		}
 		
-		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
+		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
 		buttonController.update();
 		
 	

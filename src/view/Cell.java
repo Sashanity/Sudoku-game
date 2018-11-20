@@ -57,6 +57,7 @@ public class Cell extends JLabel {
 	public void setValue(int num, boolean userInput) {
 		setForeground(userInput ? Color.BLUE : Color.BLACK);
 		setText(num > 0 ? num + "" : "");
+		value = num;
 	}
 
 	public Color getBackGround() {
@@ -66,7 +67,9 @@ public class Cell extends JLabel {
 	public int getCellX() {
 		return x;
 	}
-
+	public int getValue() {
+		return value;
+	}
 	public int getCellY() {
 		return y;
 	}
