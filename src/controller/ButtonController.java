@@ -71,10 +71,14 @@ public class ButtonController {
 							Integer number = Integer.parseInt(sudokuBoard.getSolution()[j][k].getText());
 							if (sudokuBoard.getCells()[j][k].getValue() != number) {
 								sudokuBoard.getCells()[j][k].setBackground(Color.red);
+								sudokuBoard.getCells()[j][k].setSelected(false);
+								sudokuBoard.getCells()[j][k].setAccessible(false);
 							}
 							if (sudokuBoard.getCells()[j][k].getValue() == number
 									&& sudokuBoard.getCells()[j][k].isAccessible()) {
 								sudokuBoard.getCells()[j][k].setBackground(Color.GREEN);
+								sudokuBoard.getCells()[j][k].setSelected(false);
+								sudokuBoard.getCells()[j][k].setAccessible(false);
 							}
 						}
 				} else if (game.isHelp()) {
@@ -83,8 +87,9 @@ public class ButtonController {
 					for (int j = 0; j < 9; j++)
 						for (int k = 0; k < 9; k++)
 							if (sudokuBoard.getCells()[j][k].getBackground() != Color.WHITE
-									&& sudokuBoard.getCells()[j][k].isAccessible()) {
+									&& sudokuBoard.getCells()[j][k].getBackGround() != Color.ORANGE) {
 								sudokuBoard.getCells()[j][k].setBackground(Color.white);
+								sudokuBoard.getCells()[j][k].setAccessible(true);
 							}
 
 				}

@@ -73,6 +73,12 @@ public class Cell extends JLabel {
 	public int getCellY() {
 		return y;
 	}
+	public void setSelected(boolean selected) {
+		isSelected = selected;
+	}
+	public void setAccessible(boolean accessible) {
+		this.accessible = accessible;
+	}
 
 	public boolean isSelected() {//need to figure out how to make it possible for only one Cell to be selected at a time
 		return isSelected;

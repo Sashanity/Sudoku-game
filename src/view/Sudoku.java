@@ -84,6 +84,7 @@ public class Sudoku extends JFrame{
 		for(int i = 0; i < 9; i++) {
 			for(int j = 0; j < 9; j++) {
 				sudokuBoard.getCells()[i][j].accessible = true;
+				sudokuBoard.getCells()[i][j].isSelected = false;
 				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
 				sudokuBoard.getSolution()[i][j].setValue(game.getSolution()[i][j], false);
 				sudokuBoard.getCells()[i][j].setBackground(Color.WHITE);
