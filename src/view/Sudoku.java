@@ -19,14 +19,11 @@ import controller.ButtonController;
 import controller.SudokuController;
 import model.Game;
 
-public class Sudoku extends JFrame{
+public class Sudoku extends JFrame {
 
 	// add everything such creating the window, board, buttons etc
 	// add visability
-	private SudokuBoard sudokuBoard;
-	private Game game;
-	private ButtonController buttonController;
-	private ButtonPad buttonPanel;
+
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -37,66 +34,35 @@ public class Sudoku extends JFrame{
 
 	}
 
-
 	public Sudoku() {
 
 		super("SUDOKU");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
-		
-		game = new Game();
 
-		buttonPanel = new ButtonPad();
-		sudokuBoard = new SudokuBoard();
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) {
-				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
-				sudokuBoard.getSolution()[i][j].setValue(game.getSolution()[i][j], false);
-				if(game.getGame()[i][j] != 0)
-				{
-					sudokuBoard.getCells()[i][j].accessible = false;
-					sudokuBoard.getCells()[i][j].setBackground(Color.ORANGE);
-				}
-			}
-		}
-		
-		buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
+		Game game = new Game();
+
+		ButtonPad buttonPanel = new ButtonPad();
+		SudokuBoard sudokuBoard = new SudokuBoard();
+
+		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
+
 		buttonController.update();
-		
-	
-	
+		buttonPanel.getNewGameButton().doClick();
+
+		SudokuController sudokuController = new SudokuController(sudokuBoard, game, buttonPanel);
+		sudokuController.update();
+
 		add(buttonPanel, BorderLayout.WEST);
 		add(sudokuBoard, BorderLayout.EAST);
 
 		game.addObserver(buttonPanel);
-		
+		game.addObserver(sudokuBoard);
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 
 	}
-	public Game getGame() {
-		return game;
-	}
-	public void update()
-	{
-		game = new Game();
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) {
-				sudokuBoard.getCells()[i][j].accessible = true;
-				sudokuBoard.getCells()[i][j].isSelected = false;
-				sudokuBoard.getCells()[i][j].setValue(game.getGame()[i][j], false);
-				sudokuBoard.getSolution()[i][j].setValue(game.getSolution()[i][j], false);
-				sudokuBoard.getCells()[i][j].setBackground(Color.WHITE);
-				if(game.getGame()[i][j] != 0)
-				{
-					sudokuBoard.getCells()[i][j].accessible = false;
-					sudokuBoard.getCells()[i][j].setBackground(Color.ORANGE);
-				}
-			}
-		}
-		buttonController = new ButtonController(buttonPanel, game, sudokuBoard, this);
-		buttonController.update();
-	}
-	
+
 }

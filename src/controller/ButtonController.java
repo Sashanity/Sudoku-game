@@ -1,4 +1,5 @@
 package controller;
+
 import controller.SudokuController;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JToggleButton;
 
 import model.Game;
@@ -24,24 +26,22 @@ public class ButtonController {
 	private Game game;
 	private Sudoku sudoku;
 
-	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard, Sudoku sudoku) {
+	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
 		this.buttonPad = buttonPad;
 		this.game = game;
 		this.sudokuBoard = sudokuBoard;
-		this.sudoku = sudoku;
+		// this.sudoku = sudoku;
 	}
 
 	public void update() {
+
 		buttonPad.getNewGameButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sudoku.update();
+
+				game.newGame();
+				sudokuBoard.setClues(game);
 				System.out.println("NEW GAME");
-				/*
-				 * System.out.println("Created game:"); for (int i = 0; i < 9; i++) { for (int j
-				 * = 0; j < 9; j++) {
-				 * 
-				 * System.out.print(game.getGame()[i][j]); } System.out.println(""); }
-				 */
+
 			}
 		});
 
@@ -53,73 +53,47 @@ public class ButtonController {
 		});
 		buttonPad.getSolutionButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (int j = 0; j < 9; j++)
-					for (int k = 0; k < 9; k++) {
-						Integer number = Integer.parseInt(sudokuBoard.getSolution()[j][k].getText());
-						sudokuBoard.getCells()[j][k].setValue(number, false);
-					}
+
+				sudokuBoard.setSolution(game);
 				System.out.println("Show Solution");
 			}
 		});
+		// help button shows cells in red that are not correct
 		buttonPad.getHelpButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!game.isHelp()) {
 					game.setHelp(true);
 					System.out.println("Help on");
-					for (int j = 0; j < 9; j++)
-						for (int k = 0; k < 9; k++) {
-							Integer number = Integer.parseInt(sudokuBoard.getSolution()[j][k].getText());
-							if (sudokuBoard.getCells()[j][k].getValue() != number) {
-								sudokuBoard.getCells()[j][k].setBackground(Color.red);
-								sudokuBoard.getCells()[j][k].setSelected(false);
-								sudokuBoard.getCells()[j][k].setAccessible(false);
-							}
-							if (sudokuBoard.getCells()[j][k].getValue() == number
-									&& sudokuBoard.getCells()[j][k].isAccessible()) {
-								sudokuBoard.getCells()[j][k].setBackground(Color.GREEN);
-								sudokuBoard.getCells()[j][k].setSelected(false);
-								sudokuBoard.getCells()[j][k].setAccessible(false);
-							}
-						}
-				} else if (game.isHelp()) {
-					game.setHelp(false);
-					System.out.println("Help off");
-					for (int j = 0; j < 9; j++)
-						for (int k = 0; k < 9; k++)
-							if (sudokuBoard.getCells()[j][k].getBackground() != Color.WHITE
-									&& sudokuBoard.getCells()[j][k].getBackGround() != Color.ORANGE) {
-								sudokuBoard.getCells()[j][k].setBackground(Color.white);
-								sudokuBoard.getCells()[j][k].setAccessible(true);
-							}
+					game.gameCheck();
+					sudokuBoard.setHelp(game);
 
+				} else {
+					game.setHelp(false);
 				}
 
 			}
+
 		});
+
 		buttonPad.getSubmitButton().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Input Submitted");
 			}
 		});
-		for (
 
-				int i = 0; i < 9; i++) {// changes displayed number for selected cell
-			Integer number = Integer.parseInt(buttonPad.getKeypadNumbers()[i].getText());
+		// adds listeners to the number buttons
+		for (int i = 0; i < 9; i++)
 			buttonPad.getKeypadNumbers()[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					for (int j = 0; j < 9; j++)
-						for (int k = 0; k < 9; k++) {
-							if (sudokuBoard.getCells()[j][k].isSelected()
-									&& sudokuBoard.getCells()[j][k].isAccessible())
 
-							{
-								sudokuBoard.getCells()[j][k].setValue(number, true);
-							}
-						}
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					game.setUserInput(Integer.parseInt(e.getActionCommand()));
+
 				}
+
 			});
-		}
 
 	}
 

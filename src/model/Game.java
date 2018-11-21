@@ -18,8 +18,8 @@ public class Game extends Observable {
 	static final int MIN_NUM_CLUES = 17;
 	private int[][] solution;
 	private int[][] game; // current game; created after shuffling solution;
-	// private int[][] userInput;
-	private boolean[][] checkGame;
+	private int userInput;
+	private boolean[][] helpArray;
 
 	private boolean help;
 	private int score;
@@ -27,23 +27,19 @@ public class Game extends Observable {
 	/**
 	 * Constructor
 	 */
-	
+
 	public Game() {
 		game = new int[SIZE][SIZE];
-		game = newGame();
+		newGame();
 		help = false;
-		// userInput = new int[SIZE][SIZE];
+		helpArray = new boolean[SIZE][SIZE];
+
 	}
 
-	public int[][] newGame() {
-		SolutionCreator aSolution = new SolutionCreator();
-		this.solution = aSolution.getSolution();
-		/*
-		 * System.out.println("Solution for the game:"); for (int i = 0; i < 9; i++) {
-		 * for (int j = 0; j < 9; j++) {
-		 * 
-		 * System.out.print(solution[i][j]); } System.out.println(""); }
-		 */
+	public void newGame() {
+
+		this.solution = new SolutionCreator().getSolution();
+
 		int randCol, randRow, value;
 
 		// first zero the game
@@ -57,29 +53,44 @@ public class Game extends Observable {
 			randCol = new Random().nextInt(SIZE);
 
 			value = solution[randRow][randCol];
-			System.out.println("Chosen number " + i + ": " + "solution[" + randRow + "][" + randCol + "] = " + value);
-			if (getGame()[randRow][randCol] == 0)
+			// System.out.println("Chosen number " + i + ": " + "solution[" + randRow + "]["
+			// + randCol + "] = " + value);
+			if (game[randRow][randCol] == 0)
 				setValue(value, randRow, randCol);
 			else {
-				System.out.println(
-						"Number solution[" + randRow + "][" + randCol + "] = " + value + " was already chosen");
+				// System.out.println("Number solution[" + randRow + "][" + randCol + "] = " +
+				// value + " was already chosen");
 				i--;
 			}
 
 		}
-		
-		return getGame();
+		System.out.println();
+
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				System.out.print(this.getGameArray()[i][j]);
+			}
+			System.out.println("");
+		}
+
 	}
 
-	public int[][] getGame() {
+	public int[][] getGameArray() {
 		return this.game;
 	}
 
-	/**
-	 * checks the user input with the correct solution
-	 */
-	public void checkCurrentGame() {
+	public void setGameArray(int[][] array) {
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				game[i][j] = array[i][j];
 
+			}
+
+		}
+	}
+
+	public int getValue(int x, int y) {
+		return game[y][x];
 	}
 
 	/**
@@ -91,6 +102,15 @@ public class Game extends Observable {
 	 */
 	public void setValue(int aValue, int r, int c) {
 		game[r][c] = aValue;
+		setChanged();
+		System.out.println();
+
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				System.out.print(this.getGameArray()[i][j]);
+			}
+			System.out.println("");
+		}
 
 	}
 
@@ -99,10 +119,28 @@ public class Game extends Observable {
 	 */
 	public void setHelp(boolean help) {
 		this.help = help;
+
 	}
-	public int[][] getSolution()
-	{
+
+	public boolean isHelp() {
+		return help;
+	}
+
+	public int[][] getSolution() {
 		return solution;
+	}
+
+	public void setUserInput(int keyPadNum) {
+		this.userInput = keyPadNum;
+
+	}
+
+	public int getUserInput() {
+		return userInput;
+	}
+
+	public boolean[][] getHelpArray() {
+		return helpArray;
 	}
 
 	/**
@@ -110,20 +148,20 @@ public class Game extends Observable {
 	 * 
 	 * @return the value of help
 	 */
-	public boolean isHelp() {
-		return help;
-	}
 
-	private void gameCheck() {
+	
+	//creates boolean helparray
+	public void gameCheck() {
 		for (int i = 0; i < SIZE; i++)
-			for (int j = 0; j < SIZE; j++)
-				checkGame[i][j] = game[i][j] == solution[i][j];
+			for (int j = 0; j < SIZE; j++) {
+				if (game[i][j] == 0)
+					helpArray[i][j] = true;
+				else
+					helpArray[i][j] = (game[i][j] == solution[i][j]);
+			}
+
 	}
 
-	public void runGameCheck() {
-		gameCheck(); // creates boolean array, values are result of comparing of current game to
-						// solution
 
-		// notify the observer here to show in colors
-	}
+
 }

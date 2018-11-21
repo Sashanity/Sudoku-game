@@ -77,7 +77,7 @@ public class ButtonPad extends JPanel implements Observer {
 
 		for (int i = 0; i < 9; i++) {
 			keypadNumbers[i] = new JToggleButton("" + (i + 1));
-			keypadNumbers[i].setPreferredSize(new Dimension(50, 120));
+			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
 			keypad.add(keypadNumbers[i]);
 			panelNumbers.add(keypadNumbers[i]);
 		}
