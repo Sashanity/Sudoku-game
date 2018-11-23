@@ -58,6 +58,7 @@ public class ButtonController {
 				System.out.println("Show Solution");
 			}
 		});
+		
 		// help button shows cells in red that are not correct
 		buttonPad.getHelpButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -69,6 +70,7 @@ public class ButtonController {
 
 				} else {
 					game.setHelp(false);
+					sudokuBoard.setHelp(game);
 				}
 
 			}

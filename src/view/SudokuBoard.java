@@ -73,17 +73,35 @@ public class SudokuBoard extends JPanel implements Observer {
 
 	public void setHelp(Game game) {
 		System.out.println("Setting help to board");
+		if (game.isHelp() == true) {
+			for (int i = 0; i < 9; i++)
+				for (int j = 0; j < 9; j++) {
+					if (game.getHelpArray()[i][j] == false)
+						cells[i][j].setBackground(Color.red);
+					else if (!cells[i][j].getBackground().equals(Color.GREEN))
+						cells[i][j].setBackground(Color.white);
+				}
 
-		for (int i = 0; i < 9; i++)
-			for (int j = 0; j < 9; j++) {
+		}
 
-				if (game.getHelpArray()[i][j] == false) {
+		else {
+			for (int i = 0; i < 9; i++)
+				for (int j = 0; j < 9; j++)
+					if (cells[i][j].getBackground().equals(Color.red))
+						cells[i][j].setBackground(Color.white);
 
-					cells[i][j].setBackground(Color.red);
-				} else if (!cells[i][j].getBackground().equals(Color.GREEN))
-					cells[i][j].setBackground(Color.white);
+		}
 
-			}
+		/*
+		 * for (int i = 0; i < 9; i++) for (int j = 0; j < 9; j++) { if
+		 * (game.getHelpArray()[i][j] == false) { cells[i][j].setBackground(Color.red);
+		 * } else if (!cells[i][j].getBackground().equals(Color.GREEN))
+		 * cells[i][j].setBackground(Color.white);
+		 * 
+		 * } if (game.isHelp() == false) { for (int i = 0; i < 9; i++) for (int j = 0; j
+		 * < 9; j++) if (!cells[i][j].getBackground().equals(Color.GREEN)) {
+		 * cells[i][j].setBackground(Color.white); } }
+		 */
 	}
 
 	public void setClues(Game game) {
