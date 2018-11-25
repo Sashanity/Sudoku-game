@@ -161,7 +161,31 @@ public class Game extends Observable {
 			}
 
 	}
+	
+	//Calculates the number of mistakes on a particular board upon call
+	public int calcMistakes() { 
+		int mistakes  = 0;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if(game[i][j] != 0 && game[i][j] != solution[i][j]) {
+					mistakes++;
+				}
+			}
+		}
+		return mistakes;
+	}
 
-
+	//Checks if all cells in board are correct
+	public boolean checkBoard() {
+		boolean gameFinished = true;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				if(game[i][j] != solution[i][j]) {
+					gameFinished = false;
+				}
+			}
+		}
+		return gameFinished;
+	}
 
 }

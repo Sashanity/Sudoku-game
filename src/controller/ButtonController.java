@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
 import model.Game;
@@ -25,7 +26,8 @@ public class ButtonController {
 	private ButtonPad buttonPad;
 	private Game game;
 	private Sudoku sudoku;
-
+	int score = 1000;
+	int totalMistakes = 0;
 	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
 		this.buttonPad = buttonPad;
 		this.game = game;
@@ -55,6 +57,7 @@ public class ButtonController {
 			public void actionPerformed(ActionEvent e) {
 
 				sudokuBoard.setSolution(game);
+				score = 0;
 				System.out.println("Show Solution");
 			}
 		});
@@ -72,7 +75,8 @@ public class ButtonController {
 					game.setHelp(false);
 					sudokuBoard.setHelp(game);
 				}
-
+				//Removes 3 points from score everytime help is used
+				score = score - 3;
 			}
 
 		});
@@ -80,7 +84,27 @@ public class ButtonController {
 		buttonPad.getSubmitButton().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Input Submitted");
+				//Tracks the total number of mistakes
+				totalMistakes = totalMistakes + game.calcMistakes();
+				
+				//Calculates the number of mistakes
+				int boardMistakes  = game.calcMistakes();
+				//Message that displays when board isn't solved
+				String scoreDetails = "Sorry! Unfortunately this is not the solution!" + "\n" + 
+						"The Sudoku board is not fully filled out or has incorrect cells!" + "\n" 
+						+ "Mistakes on board: " + boardMistakes;  
+				//Message that displays when board is solved
+				String scoreDetailsCompleted = "Congratulations on completing the Sudoku Board!" + "\n"
+						+ "Number of mistakes made: " + totalMistakes + "\n" + "Score: " + score;
+				
+				//Creates the alert window, upon button press
+				if(game.checkBoard() == true) {
+					JOptionPane.showMessageDialog(null, scoreDetailsCompleted, "Score", JOptionPane.PLAIN_MESSAGE);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, scoreDetails, "Score", JOptionPane.PLAIN_MESSAGE);
+					score = score - totalMistakes;
+				}
 			}
 		});
 
