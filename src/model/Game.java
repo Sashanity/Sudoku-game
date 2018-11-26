@@ -27,7 +27,7 @@ public class Game extends Observable {
 	int totalMistakes = 0;
 
 	private boolean help;
-	private int score;
+	int score = 1000;
 
 	/**
 	 * Constructor
@@ -209,6 +209,12 @@ public class Game extends Observable {
 			}
 		}
 		return gameFinished;
+	}
+	public void subtractPoints() {
+		score = score -3;
+	}
+	public void setScore(int n) {
+		score = n;
 	}
 	public void score() {
 		endTime = System.currentTimeMillis();

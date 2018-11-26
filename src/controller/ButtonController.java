@@ -26,7 +26,6 @@ public class ButtonController {
 	private ButtonPad buttonPad;
 	private Game game;
 	private Sudoku sudoku;
-	int score = 1000;
 	int totalMistakes = 0;
 
 	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
@@ -59,7 +58,7 @@ public class ButtonController {
 			public void actionPerformed(ActionEvent e) {
 
 				sudokuBoard.setSolution(game);
-				score = 0;
+				game.setScore(0);
 				System.out.println("Show Solution");
 			}
 		});
@@ -78,7 +77,7 @@ public class ButtonController {
 					sudokuBoard.setHelp(game);
 				}
 				//Removes 3 points from score everytime help is used
-				score = score - 3;
+				game.subtractPoints();
 			}
 
 		});
