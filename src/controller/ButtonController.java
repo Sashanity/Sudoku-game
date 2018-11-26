@@ -18,21 +18,17 @@ import javax.swing.JToggleButton;
 
 import model.Game;
 import view.ButtonPad;
-import view.Sudoku;
 import view.SudokuBoard;
 
 public class ButtonController {
 	private SudokuBoard sudokuBoard;
 	private ButtonPad buttonPad;
 	private Game game;
-	private Sudoku sudoku;
-	int totalMistakes = 0;
 
 	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
 		this.buttonPad = buttonPad;
 		this.game = game;
 		this.sudokuBoard = sudokuBoard;
-		// this.sudoku = sudoku;
 	}
 
 	public void update() {
@@ -58,7 +54,7 @@ public class ButtonController {
 			public void actionPerformed(ActionEvent e) {
 
 				sudokuBoard.setSolution(game);
-				game.setScore(0);
+				game.resetScore();
 				System.out.println("Show Solution");
 			}
 		});

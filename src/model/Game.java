@@ -210,12 +210,22 @@ public class Game extends Observable {
 		}
 		return gameFinished;
 	}
+	/**
+	 * Removes 3 times from the score. Only use if "help" button is used.
+	 */
 	public void subtractPoints() {
 		score = score -3;
 	}
-	public void setScore(int n) {
-		score = n;
+	/**
+	 * resets score to be used for new game;
+	 */
+	public void resetScore() {
+		score = 0;
 	}
+	/**
+	 * When submit button is clicked, calculates the score of the game and displays it.
+	 * Takes into consideration the number of times "help" was used and number of total mistakes. Also displays the time elapsed.
+	 */
 	public void score() {
 		endTime = System.currentTimeMillis();
 		//Tracks time taken
