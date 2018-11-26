@@ -126,7 +126,7 @@ public class SudokuBoard extends JPanel implements Observer {
 				if (!cells[i][j].getBackground().equals(Color.green)) {
 					cells[i][j].setBackground(Color.white);
 					// to make the board unmodifiable we need to put solution in the game.
-					// thts how it works now
+					// thats how it works now
 
 					game.setGameArray(game.getSolution());
 					cells[i][j].setValue(game.getGameArray()[i][j], false);

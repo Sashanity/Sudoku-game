@@ -45,7 +45,6 @@ public class SudokuController {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
 
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)

@@ -3,6 +3,8 @@ package model;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import view.Sudoku;
 import view.SudokuBoard;
 
@@ -20,12 +22,17 @@ public class Game extends Observable {
 	private int[][] game; // current game; created after shuffling solution;
 	private int userInput;
 	private boolean[][] helpArray;
+	long startTime;
+	long endTime;
+	int totalMistakes = 0;
 
 	private boolean help;
 	private int score;
 
 	/**
 	 * Constructor
+	 * starts help boolean as false
+	 * 
 	 */
 
 	public Game() {
@@ -74,11 +81,18 @@ public class Game extends Observable {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @return the 2-d array of the current game
+	 */
 	public int[][] getGameArray() {
 		return this.game;
 	}
 
+	/**
+	 * Sets the 2d array of game to the current game array that is to be played
+	 * @param array the new 2d game array
+	 */
 	public void setGameArray(int[][] array) {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -121,11 +135,17 @@ public class Game extends Observable {
 		this.help = help;
 
 	}
-
+	/**
+	 * 
+	 * @return the boolean value of the help instance variable
+	 */
 	public boolean isHelp() {
 		return help;
 	}
-
+	/**
+	 * 
+	 * @return the 2d array of the game's solution
+	 */
 	public int[][] getSolution() {
 		return solution;
 	}
@@ -142,6 +162,9 @@ public class Game extends Observable {
 	public boolean[][] getHelpArray() {
 		return helpArray;
 	}
+	public void setStartTime(long n) {
+		startTime = n;
+		}
 
 	/**
 	 * Checks if user asked for help
@@ -186,6 +209,38 @@ public class Game extends Observable {
 			}
 		}
 		return gameFinished;
+	}
+	public void score() {
+		endTime = System.currentTimeMillis();
+		//Tracks time taken
+		long timeTaken = endTime - startTime;
+		int seconds = (int) (timeTaken / 1000) % 60 ;
+	    int minutes = (int) ((timeTaken / (1000*60)) % 60);
+	    int hours = (int) ((timeTaken / (1000*3600)) % 60);
+		//Tracks the total number of mistakes
+		totalMistakes = totalMistakes + calcMistakes();
+		
+		//Calculates the number of mistakes
+		int boardMistakes  = calcMistakes();
+		//Message that displays when board isn't solved
+		String scoreDetails = "Sorry! Unfortunately this is not the solution!" + "\n" + 
+				"The Sudoku board is not fully filled out or has incorrect cells!" + "\n" + "\n"
+				+ "Mistakes on board: " + boardMistakes + "\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
+				String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);  
+		//Message that displays when board is solved
+		String scoreDetailsCompleted = "Congratulations on completing the Sudoku Board!" + "\n"
+				+ "Number of mistakes made: " + totalMistakes + "\n" + "Score: " + score +
+				"\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
+				String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+		
+		//Creates the alert window, upon button press
+		if(checkBoard() == true) {
+			JOptionPane.showMessageDialog(null, scoreDetailsCompleted, "Score", JOptionPane.PLAIN_MESSAGE);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, scoreDetails, "Score", JOptionPane.PLAIN_MESSAGE);
+			score = score - totalMistakes;
+		}
 	}
 
 }

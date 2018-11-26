@@ -22,7 +22,7 @@ import model.Game;
 public class Sudoku extends JFrame {
 
 	// add everything such creating the window, board, buttons etc
-	// add visability
+	// add visibility
 
 	public static void main(String[] args) {
 		try {
@@ -34,6 +34,7 @@ public class Sudoku extends JFrame {
 
 	}
 
+	
 	public Sudoku() {
 
 		super("SUDOKU");

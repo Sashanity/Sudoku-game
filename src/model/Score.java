@@ -8,7 +8,7 @@ public class Score {
 	int newScore, savedScore, timeTaken, numOfMistakes;
 	
 	/**
-	 * Calculates core of the iser based on the homemade formula
+	 * Calculates score of the user based on the homemade formula
 	 * @return current score
 	 */
 	public int calculateScore(){
@@ -17,7 +17,7 @@ public class Score {
 	}
 	
 	/**
-	 * showes the score in details such as how many point user gained for each move
+	 * shows the score in details such as how many points user gained for each move
 	 */
 	public void scoreDetails (){
 		

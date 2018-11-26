@@ -21,7 +21,10 @@ public class SolutionCreator {
 		shuffleBoard(firstBoard);
 
 	}
-
+	/**
+	 * 
+	 * @return the firstBoard; given is the original solved board
+	 */
 	public int[][] getSolution() {
 		return firstBoard;
 	}

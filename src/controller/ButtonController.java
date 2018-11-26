@@ -28,8 +28,7 @@ public class ButtonController {
 	private Sudoku sudoku;
 	int score = 1000;
 	int totalMistakes = 0;
-	long startTime;
-	long endTime;
+
 	public ButtonController(ButtonPad buttonPad, Game game, SudokuBoard sudokuBoard) {
 		this.buttonPad = buttonPad;
 		this.game = game;
@@ -38,12 +37,12 @@ public class ButtonController {
 	}
 
 	public void update() {
-
+		
 		buttonPad.getNewGameButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				game.newGame();
-				startTime = System.currentTimeMillis();
+				game.setStartTime(System.currentTimeMillis());
 				sudokuBoard.setClues(game);
 				System.out.println("NEW GAME");
 
@@ -87,36 +86,7 @@ public class ButtonController {
 		buttonPad.getSubmitButton().addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				endTime = System.currentTimeMillis();
-				//Tracks time taken
-				long timeTaken = endTime - startTime;
-				int seconds = (int) (timeTaken / 1000) % 60 ;
-			    int minutes = (int) ((timeTaken / (1000*60)) % 60);
-			    int hours = (int) ((timeTaken / (1000*3600)) % 60);
-				//Tracks the total number of mistakes
-				totalMistakes = totalMistakes + game.calcMistakes();
-				
-				//Calculates the number of mistakes
-				int boardMistakes  = game.calcMistakes();
-				//Message that displays when board isn't solved
-				String scoreDetails = "Sorry! Unfortunately this is not the solution!" + "\n" + 
-						"The Sudoku board is not fully filled out or has incorrect cells!" + "\n" + "\n"
-						+ "Mistakes on board: " + boardMistakes + "\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
-						String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);  
-				//Message that displays when board is solved
-				String scoreDetailsCompleted = "Congratulations on completing the Sudoku Board!" + "\n"
-						+ "Number of mistakes made: " + totalMistakes + "\n" + "Score: " + score +
-						"\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
-						String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
-				
-				//Creates the alert window, upon button press
-				if(game.checkBoard() == true) {
-					JOptionPane.showMessageDialog(null, scoreDetailsCompleted, "Score", JOptionPane.PLAIN_MESSAGE);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, scoreDetails, "Score", JOptionPane.PLAIN_MESSAGE);
-					score = score - totalMistakes;
-				}
+				game.score();
 			}
 		});
 
@@ -132,7 +102,6 @@ public class ButtonController {
 				}
 
 			});
-
-	}
-
+			}
 }
+
