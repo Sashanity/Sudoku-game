@@ -40,7 +40,6 @@ public class Game extends Observable {
 		newGame();
 		help = false;
 		helpArray = new boolean[SIZE][SIZE];
-
 	}
 
 	public void newGame() {

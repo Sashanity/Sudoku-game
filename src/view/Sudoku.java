@@ -12,8 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.*;
+import javax.swing.text.View;
 
 import controller.ButtonController;
 import controller.SudokuController;
@@ -23,47 +26,59 @@ public class Sudoku extends JFrame {
 
 	// add everything such creating the window, board, buttons etc
 	// add visibility
-
+	/**private static BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
+	private static Sudoku sudoku;
+	private static Game game;
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		new Sudoku();
+		sudoku = new Sudoku();
+		game = new Game();
+		ButtonController controller = new ButtonController(sudoku, game, queue);
+		game.newGame();
+		sudoku.dispose();
+		queue.clear();
 
 	}
+	 * @param queue 
+	*/
 
-	
-	public Sudoku() {
+	private SudokuBoard sudokuBoard;
+	public Sudoku(BlockingQueue<Message> queue) {
 
 		super("SUDOKU");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 
-		Game game = new Game();
+		//Game game = new Game();
 
-		ButtonPad buttonPanel = new ButtonPad();
-		SudokuBoard sudokuBoard = new SudokuBoard();
+		ButtonPad buttonPanel = new ButtonPad(queue);
+		sudokuBoard = new SudokuBoard();
+		//ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
 
-		ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
-
-		buttonController.update();
+		//buttonController.update();
 		buttonPanel.getNewGameButton().doClick();
 
-		SudokuController sudokuController = new SudokuController(sudokuBoard, game, buttonPanel);
-		sudokuController.update();
+		//SudokuController sudokuController = new SudokuController(sudokuBoard, game, buttonPanel);
+		//sudokuController.update();
 
 		add(buttonPanel, BorderLayout.WEST);
 		add(sudokuBoard, BorderLayout.EAST);
 
-		game.addObserver(buttonPanel);
-		game.addObserver(sudokuBoard);
+		//game.addObserver(buttonPanel);
+		//game.addObserver(sudokuBoard);
 
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 
+	}
+	public SudokuBoard getBoard()
+	{
+		return sudokuBoard;
 	}
 
 }

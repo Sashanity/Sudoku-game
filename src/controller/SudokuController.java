@@ -20,7 +20,6 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import model.Game;
-import view.Board;
 import view.ButtonPad;
 import view.Cell;
 
