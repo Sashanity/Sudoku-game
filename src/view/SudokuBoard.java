@@ -53,8 +53,10 @@ public class SudokuBoard extends JPanel implements Observer {
 				cells[row][col] = new Cell(col, row);
 				// cells[row][col].setAccessible(true);
 				subBoards[row / 3][col / 3].add(cells[row][col]);
+				
 			}
 		}
+		
 
 	}
 
@@ -141,7 +143,7 @@ public class SudokuBoard extends JPanel implements Observer {
 	}
 
 	@Override
-
+	
 	public void update(Observable arg0, Object arg1) {
 		// TODO Auto-generated method stub
 
