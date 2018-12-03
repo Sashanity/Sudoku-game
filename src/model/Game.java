@@ -30,8 +30,7 @@ public class Game extends Observable {
 	int score = 1000;
 
 	/**
-	 * Constructor
-	 * starts help boolean as false
+	 * Constructor starts help boolean as false
 	 * 
 	 */
 
@@ -80,6 +79,7 @@ public class Game extends Observable {
 		}
 
 	}
+
 	/**
 	 * 
 	 * @return the 2-d array of the current game
@@ -90,6 +90,7 @@ public class Game extends Observable {
 
 	/**
 	 * Sets the 2d array of game to the current game array that is to be played
+	 * 
 	 * @param array the new 2d game array
 	 */
 	public void setGameArray(int[][] array) {
@@ -134,6 +135,7 @@ public class Game extends Observable {
 		this.help = help;
 
 	}
+
 	/**
 	 * 
 	 * @return the boolean value of the help instance variable
@@ -141,6 +143,7 @@ public class Game extends Observable {
 	public boolean isHelp() {
 		return help;
 	}
+
 	/**
 	 * 
 	 * @return the 2d array of the game's solution
@@ -161,9 +164,10 @@ public class Game extends Observable {
 	public boolean[][] getHelpArray() {
 		return helpArray;
 	}
+
 	public void setStartTime(long n) {
 		startTime = n;
-		}
+	}
 
 	/**
 	 * Checks if user asked for help
@@ -171,8 +175,7 @@ public class Game extends Observable {
 	 * @return the value of help
 	 */
 
-	
-	//creates boolean helparray
+	// creates boolean helparray
 	public void gameCheck() {
 		for (int i = 0; i < SIZE; i++)
 			for (int j = 0; j < SIZE; j++) {
@@ -183,13 +186,13 @@ public class Game extends Observable {
 			}
 
 	}
-	
-	//Calculates the number of mistakes on a particular board upon call
-	public int calcMistakes() { 
-		int mistakes  = 0;
+
+	// Calculates the number of mistakes on a particular board upon call
+	public int calcMistakes() {
+		int mistakes = 0;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if(game[i][j] != 0 && game[i][j] != solution[i][j]) {
+				if (game[i][j] != 0 && game[i][j] != solution[i][j]) {
 					mistakes++;
 				}
 			}
@@ -197,62 +200,66 @@ public class Game extends Observable {
 		return mistakes;
 	}
 
-	//Checks if all cells in board are correct
+	// Checks if all cells in board are correct
 	public boolean checkBoard() {
 		boolean gameFinished = true;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				if(game[i][j] != solution[i][j]) {
+				if (game[i][j] != solution[i][j]) {
 					gameFinished = false;
 				}
 			}
 		}
 		return gameFinished;
 	}
+
 	/**
 	 * Removes 3 times from the score. Only use if "help" button is used.
 	 */
 	public void subtractPoints() {
-		score = score -3;
+		score = score - 3;
 	}
+
 	/**
 	 * resets score to be used for new game;
 	 */
 	public void resetScore() {
 		score = 0;
 	}
+
 	/**
-	 * When submit button is clicked, calculates the score of the game and displays it.
-	 * Takes into consideration the number of times "help" was used and number of total mistakes. Also displays the time elapsed.
+	 * When submit button is clicked, calculates the score of the game and displays
+	 * it. Takes into consideration the number of times "help" was used and number
+	 * of total mistakes. Also displays the time elapsed.
 	 */
 	public void score() {
 		endTime = System.currentTimeMillis();
-		//Tracks time taken
+		// Tracks time taken
 		long timeTaken = endTime - startTime;
-		int seconds = (int) (timeTaken / 1000) % 60 ;
-	    int minutes = (int) ((timeTaken / (1000*60)) % 60);
-	    int hours = (int) ((timeTaken / (1000*3600)) % 60);
-		//Tracks the total number of mistakes
+		int seconds = (int) (timeTaken / 1000) % 60;
+		int minutes = (int) ((timeTaken / (1000 * 60)) % 60);
+		int hours = (int) ((timeTaken / (1000 * 3600)) % 60);
+		// Tracks the total number of mistakes
 		totalMistakes = totalMistakes + calcMistakes();
-		
-		//Calculates the number of mistakes
-		int boardMistakes  = calcMistakes();
-		//Message that displays when board isn't solved
-		String scoreDetails = "Sorry! Unfortunately this is not the solution!" + "\n" + 
-				"The Sudoku board is not fully filled out or has incorrect cells!" + "\n" + "\n"
-				+ "Mistakes on board: " + boardMistakes + "\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
-				String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);  
-		//Message that displays when board is solved
+
+		// Calculates the number of mistakes
+		int boardMistakes = calcMistakes();
+		// Message that displays when board isn't solved
+		String scoreDetails = "Sorry! Unfortunately this is not the solution!" + "\n"
+				+ "The Sudoku board is not fully filled out or has incorrect cells!" + "\n" + "\n"
+				+ "Mistakes on board: " + boardMistakes + "\n" + "\n" + "Time Elapsed(hours/mins/secs): "
+				+ String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":"
+				+ String.format("%02d", seconds);
+		// Message that displays when board is solved
 		String scoreDetailsCompleted = "Congratulations on completing the Sudoku Board!" + "\n"
-				+ "Number of mistakes made: " + totalMistakes + "\n" + "Score: " + score +
-				"\n" + "\n" + "Time Elapsed(hours/mins/secs): " +
-				String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
-		
-		//Creates the alert window, upon button press
-		if(checkBoard() == true) {
+				+ "Number of mistakes made: " + totalMistakes + "\n" + "Score: " + score + "\n" + "\n"
+				+ "Time Elapsed(hours/mins/secs): " + String.format("%02d", hours) + ":"
+				+ String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+
+		// Creates the alert window, upon button press
+		if (checkBoard() == true) {
 			JOptionPane.showMessageDialog(null, scoreDetailsCompleted, "Score", JOptionPane.PLAIN_MESSAGE);
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(null, scoreDetails, "Score", JOptionPane.PLAIN_MESSAGE);
 			score = score - totalMistakes;
 		}

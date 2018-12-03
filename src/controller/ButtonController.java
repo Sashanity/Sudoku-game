@@ -31,22 +31,28 @@ public class ButtonController {
 	private Game game;
 	private Sudoku sudoku;
 	private LinkedList<Valve> valves = new LinkedList<Valve>();
-	private SudokuController sudokucontroller;
 	private BlockingQueue<Message> queue;
 
-	public ButtonController(Sudoku sudoku, Game game, BlockingQueue<Message> queue) {
+	public ButtonController(Sudoku sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.sudoku = sudoku;
 		this.game = game;
 		this.queue = queue;
-		this.sudokuBoard = sudoku.getBoard();
-		buttonPad = new ButtonPad(queue);
-
+		sudokuBoard = sudoku.getBoard();
+		sudokuBoard.setClues(game); //sets the clues on the board
+		buttonPad = sudoku.buttonPanel;
+		this.update();
+		mainLoop();
 	}
 	public BlockingQueue<Message> getQueue(){
 		return queue;
 	}
 
 	public void mainLoop() throws Exception {
+		valves.add(new DoNewGameValve());
+		valves.add(new ExitGameValve());
+		valves.add(new GetSolutionValve());
+		valves.add(new GetHelpValve());
+		valves.add(new SubmitGameValve());
 		Valve.ValveResponse response = Valve.ValveResponse.EXECUTED;
 		Message message = null;
 		while (response != Valve.ValveResponse.FINISH) {
@@ -74,7 +80,7 @@ public class ButtonController {
 
 	/**
 	 * Creates new game
-	 * @author Benjamin
+	 * 
 	 *
 	 */
 	private class DoNewGameValve implements Valve {
@@ -84,16 +90,16 @@ public class ButtonController {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS;
 			}
-			game.newGame();
-			game.setStartTime(System.currentTimeMillis());
-			sudokuBoard.setClues(game);
-			System.out.println("NEW GAME");
+			game.newGame();//creates a new game
+			game.setStartTime(System.currentTimeMillis());//resets the game start time to
+			sudokuBoard.setClues(game);//sets the view to display the clues on sudokoboard
+			System.out.println("DoNewGameValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
 	/**
 	 * Exits the game
-	 * @author Benjamin
+	 * 
 	 *
 	 */
 	private class ExitGameValve implements Valve {
@@ -103,8 +109,9 @@ public class ButtonController {
 				return ValveResponse.MISS;
 			}
 			System.out.println("EXIT");
-			System.exit(0);
-			return ValveResponse.EXECUTED;
+			System.exit(0);//exits the game
+			System.out.println("ExitGameValve Executed");
+			return ValveResponse.FINISH;//mainloop now finished
 		}
 	}
 	/*
@@ -113,12 +120,13 @@ public class ButtonController {
 	private class GetSolutionValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
-			if (message.getClass() != GetSolutionMessage.class) {
+			if (message.getClass() != SolutionMessage.class) {
 				return ValveResponse.MISS;
 			}
 			sudokuBoard.setSolution(game);
 			game.resetScore();
 			System.out.println("Show Solution");
+			System.out.println("GetSolutionValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -130,7 +138,7 @@ public class ButtonController {
 	private class GetHelpValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
-			if (message.getClass() != GetHelpMessage.class) {
+			if (message.getClass() != HelpMessage.class) {
 				return ValveResponse.MISS;
 			}
 			if (!game.isHelp()) {
@@ -146,22 +154,27 @@ public class ButtonController {
 				sudokuBoard.setHelp(game);
 				
 			}
+			System.out.println("GetHelpValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 
 	}
 
-	private class SubmitGame implements Valve {
+	private class SubmitGameValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SubmitGameMessage.class) {
 				return ValveResponse.MISS;
 			}
 			game.score();
+			System.out.println("SubmitGameValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
-
+	/*
+	 * gives mouse listeners to the sudoku board and actionlisteners to the buttonpad
+	 * May need to refactor these into the view class somehow
+	 */
 	public void update() {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)
@@ -180,47 +193,6 @@ public class ButtonController {
 			});
 	}
 
-	/**
-	 * buttonPad.getNewGameButton().addActionListener(new ActionListener() { public
-	 * void actionPerformed(ActionEvent e) {
-	 * 
-	 * game.newGame(); game.setStartTime(System.currentTimeMillis());
-	 * sudokuBoard.setClues(game); System.out.println("NEW GAME");
-	 * 
-	 * } });
-	 * 
-	 * buttonPad.getExitButton().addActionListener(new ActionListener() { public
-	 * void actionPerformed(ActionEvent e) { System.out.println("EXIT");
-	 * System.exit(0); } }); buttonPad.getSolutionButton().addActionListener(new
-	 * ActionListener() { public void actionPerformed(ActionEvent e) {
-	 * 
-	 * sudokuBoard.setSolution(game); game.resetScore(); System.out.println("Show
-	 * Solution"); } });
-	 * 
-	 * // receive message from helpButton help button shows cells in red that are
-	 * not // correct buttonPad.getHelpButton().addActionListener(new
-	 * ActionListener() { public void actionPerformed(ActionEvent e) { if
-	 * (!game.isHelp()) { game.setHelp(true); System.out.println("Help on");
-	 * game.gameCheck(); sudokuBoard.setHelp(game);
-	 * 
-	 * } else { game.setHelp(false); sudokuBoard.setHelp(game); } // Removes 3
-	 * points from score everytime help is used game.subtractPoints(); }
-	 * 
-	 * }); buttonPad.getSubmitButton().addActionListener(new ActionListener() {
-	 * 
-	 * public void actionPerformed(ActionEvent e) { game.score(); } });
-	 * 
-	 * // adds listeners to the number buttons for (int i = 0; i < 9; i++)
-	 * buttonPad.getKeypadNumbers()[i].addActionListener(new ActionListener() {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent e) { // TODO Auto-generated
-	 *           method stub
-	 *           game.setUserInput(Integer.parseInt(e.getActionCommand()));
-	 * 
-	 *           }
-	 * 
-	 *           }); }
-	 */
 	class Handler implements MouseListener {
 		private Game game;
 

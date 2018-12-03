@@ -27,6 +27,9 @@ public class SudokuBoard extends JPanel implements Observer {
 	private Cell[][] solution;
 	private JPanel[][] subBoards;
 
+	/*
+	 * Creates the layout of the sudokuboard
+	 */
 	public SudokuBoard() {
 		super(new GridLayout(3, 3));
 
@@ -105,9 +108,10 @@ public class SudokuBoard extends JPanel implements Observer {
 		 * cells[i][j].setBackground(Color.white); } }
 		 */
 	}
-
+	/*
+	 * Adds clues to the Board
+	 */
 	public void setClues(Game game) {
-		// this block adds clues to the board
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -121,7 +125,9 @@ public class SudokuBoard extends JPanel implements Observer {
 			}
 		}
 	}
-
+	/*
+	 * Sets the board to display the solution
+	 */
 	public void setSolution(Game game) {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
