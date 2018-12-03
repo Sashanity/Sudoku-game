@@ -31,22 +31,28 @@ public class ButtonController {
 	private Game game;
 	private Sudoku sudoku;
 	private LinkedList<Valve> valves = new LinkedList<Valve>();
-	private SudokuController sudokucontroller;
 	private BlockingQueue<Message> queue;
 
-	public ButtonController(Sudoku sudoku, Game game, BlockingQueue<Message> queue) {
+	public ButtonController(Sudoku sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.sudoku = sudoku;
 		this.game = game;
 		this.queue = queue;
-		this.sudokuBoard = sudoku.getBoard();
-		buttonPad = new ButtonPad(queue);
-
+		sudokuBoard = sudoku.getBoard();
+		sudokuBoard.setClues(game); //sets the clues on the board
+		buttonPad = sudoku.buttonPanel;
+		this.update();
+		mainLoop();
 	}
 	public BlockingQueue<Message> getQueue(){
 		return queue;
 	}
 
 	public void mainLoop() throws Exception {
+		valves.add(new DoNewGameValve());
+		valves.add(new ExitGameValve());
+		valves.add(new GetSolutionValve());
+		valves.add(new GetHelpValve());
+		valves.add(new SubmitGameValve());
 		Valve.ValveResponse response = Valve.ValveResponse.EXECUTED;
 		Message message = null;
 		while (response != Valve.ValveResponse.FINISH) {
@@ -84,10 +90,9 @@ public class ButtonController {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS;
 			}
-			game.newGame();
-			game.setStartTime(System.currentTimeMillis());
-			sudokuBoard.setClues(game);
-			System.out.println("NEW GAME");
+			game.newGame();//creates a new game
+			game.setStartTime(System.currentTimeMillis());//resets the game start time to
+			sudokuBoard.setClues(game);//sets the view to display the clues on sudokoboard
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -103,8 +108,8 @@ public class ButtonController {
 				return ValveResponse.MISS;
 			}
 			System.out.println("EXIT");
-			System.exit(0);
-			return ValveResponse.EXECUTED;
+			System.exit(0);//exits the game
+			return ValveResponse.FINISH;//mainloop now finished
 		}
 	}
 	/*
@@ -113,7 +118,7 @@ public class ButtonController {
 	private class GetSolutionValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
-			if (message.getClass() != GetSolutionMessage.class) {
+			if (message.getClass() != SolutionMessage.class) {
 				return ValveResponse.MISS;
 			}
 			sudokuBoard.setSolution(game);
@@ -130,7 +135,7 @@ public class ButtonController {
 	private class GetHelpValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
-			if (message.getClass() != GetHelpMessage.class) {
+			if (message.getClass() != HelpMessage.class) {
 				return ValveResponse.MISS;
 			}
 			if (!game.isHelp()) {
@@ -151,7 +156,7 @@ public class ButtonController {
 
 	}
 
-	private class SubmitGame implements Valve {
+	private class SubmitGameValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SubmitGameMessage.class) {
@@ -161,7 +166,10 @@ public class ButtonController {
 			return ValveResponse.EXECUTED;
 		}
 	}
-
+	/*
+	 * gives mouse listeners to the sudoku board and actionlisteners to the buttonpad
+	 * May need to refactor these into the view class somehow
+	 */
 	public void update() {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)

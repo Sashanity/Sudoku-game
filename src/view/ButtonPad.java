@@ -46,11 +46,11 @@ public class ButtonPad extends JPanel implements Observer {
 		newGameButton.setPreferredSize(new Dimension(100, 30));
 		newGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				try {
-					queue.put(new NewGameMessage());
-				} catch (InterruptedException exception) {
-					exception.printStackTrace();
-				}
+					try {
+						queue.put(new NewGameMessage());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 			}
 		});
 
@@ -70,13 +70,23 @@ public class ButtonPad extends JPanel implements Observer {
 				}
 				// send message to ButtonController for sudokuBoard to setSolution(game)
 				// game.resetScore();
-				// System.out.println("Show Solution")
 			}
 
 		});
 
 		exitButton = new JButton("Exit");
 		exitButton.setPreferredSize(new Dimension(100, 30));
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					queue.put(new ExitGameMessage());
+				} catch (InterruptedException exception) {
+					exception.printStackTrace();
+				}
+				// send message to ButtonController to call game.score
+			}
+
+		});
 
 		submitButton = new JButton("Submit");
 		submitButton.setPreferredSize(new Dimension(100, 30));
@@ -104,7 +114,11 @@ public class ButtonPad extends JPanel implements Observer {
 		helpButton.setToolTipText("Toggle on to see which cells are correct/incorrect");
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// send message to ButtonController
+				try {
+					queue.put(new HelpMessage());
+				} catch (InterruptedException exception) {
+					exception.printStackTrace();
+				}
 			}
 
 		});
@@ -129,6 +143,7 @@ public class ButtonPad extends JPanel implements Observer {
 			keypad.add(keypadNumbers[i]);
 			panelNumbers.add(keypadNumbers[i]);
 		}
+		
 
 	}
 

@@ -14,7 +14,7 @@ public class Main {
 	private static Sudoku sudoku;
 	private static Game game;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception ex) {

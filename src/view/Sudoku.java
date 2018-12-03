@@ -26,26 +26,7 @@ public class Sudoku extends JFrame {
 
 	// add everything such creating the window, board, buttons etc
 	// add visibility
-	/**private static BlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
-	private static Sudoku sudoku;
-	private static Game game;
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		sudoku = new Sudoku();
-		game = new Game();
-		ButtonController controller = new ButtonController(sudoku, game, queue);
-		game.newGame();
-		sudoku.dispose();
-		queue.clear();
-
-	}
-	 * @param queue 
-	*/
-
+	public ButtonPad buttonPanel;
 	private SudokuBoard sudokuBoard;
 	public Sudoku(BlockingQueue<Message> queue) {
 
@@ -53,17 +34,13 @@ public class Sudoku extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
 
-		//Game game = new Game();
 
-		ButtonPad buttonPanel = new ButtonPad(queue);
+		buttonPanel = new ButtonPad(queue);
 		sudokuBoard = new SudokuBoard();
 		//ButtonController buttonController = new ButtonController(buttonPanel, game, sudokuBoard);
 
 		//buttonController.update();
 		buttonPanel.getNewGameButton().doClick();
-
-		//SudokuController sudokuController = new SudokuController(sudokuBoard, game, buttonPanel);
-		//sudokuController.update();
 
 		add(buttonPanel, BorderLayout.WEST);
 		add(sudokuBoard, BorderLayout.EAST);
@@ -75,6 +52,9 @@ public class Sudoku extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 
+	}
+	public ButtonPad getbuttonpad() {
+		return buttonPanel;
 	}
 	public SudokuBoard getBoard()
 	{
