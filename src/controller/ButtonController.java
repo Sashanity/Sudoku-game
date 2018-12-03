@@ -93,6 +93,7 @@ public class ButtonController {
 			game.newGame();//creates a new game
 			game.setStartTime(System.currentTimeMillis());//resets the game start time to
 			sudokuBoard.setClues(game);//sets the view to display the clues on sudokoboard
+			System.out.println("DoNewGameValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -109,6 +110,7 @@ public class ButtonController {
 			}
 			System.out.println("EXIT");
 			System.exit(0);//exits the game
+			System.out.println("ExitGameValve Executed");
 			return ValveResponse.FINISH;//mainloop now finished
 		}
 	}
@@ -124,6 +126,7 @@ public class ButtonController {
 			sudokuBoard.setSolution(game);
 			game.resetScore();
 			System.out.println("Show Solution");
+			System.out.println("GetSolutionValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -151,6 +154,7 @@ public class ButtonController {
 				sudokuBoard.setHelp(game);
 				
 			}
+			System.out.println("GetHelpValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 
@@ -163,6 +167,7 @@ public class ButtonController {
 				return ValveResponse.MISS;
 			}
 			game.score();
+			System.out.println("SubmitGameValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -188,47 +193,6 @@ public class ButtonController {
 			});
 	}
 
-	/**
-	 * buttonPad.getNewGameButton().addActionListener(new ActionListener() { public
-	 * void actionPerformed(ActionEvent e) {
-	 * 
-	 * game.newGame(); game.setStartTime(System.currentTimeMillis());
-	 * sudokuBoard.setClues(game); System.out.println("NEW GAME");
-	 * 
-	 * } });
-	 * 
-	 * buttonPad.getExitButton().addActionListener(new ActionListener() { public
-	 * void actionPerformed(ActionEvent e) { System.out.println("EXIT");
-	 * System.exit(0); } }); buttonPad.getSolutionButton().addActionListener(new
-	 * ActionListener() { public void actionPerformed(ActionEvent e) {
-	 * 
-	 * sudokuBoard.setSolution(game); game.resetScore(); System.out.println("Show
-	 * Solution"); } });
-	 * 
-	 * // receive message from helpButton help button shows cells in red that are
-	 * not // correct buttonPad.getHelpButton().addActionListener(new
-	 * ActionListener() { public void actionPerformed(ActionEvent e) { if
-	 * (!game.isHelp()) { game.setHelp(true); System.out.println("Help on");
-	 * game.gameCheck(); sudokuBoard.setHelp(game);
-	 * 
-	 * } else { game.setHelp(false); sudokuBoard.setHelp(game); } // Removes 3
-	 * points from score everytime help is used game.subtractPoints(); }
-	 * 
-	 * }); buttonPad.getSubmitButton().addActionListener(new ActionListener() {
-	 * 
-	 * public void actionPerformed(ActionEvent e) { game.score(); } });
-	 * 
-	 * // adds listeners to the number buttons for (int i = 0; i < 9; i++)
-	 * buttonPad.getKeypadNumbers()[i].addActionListener(new ActionListener() {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent e) { // TODO Auto-generated
-	 *           method stub
-	 *           game.setUserInput(Integer.parseInt(e.getActionCommand()));
-	 * 
-	 *           }
-	 * 
-	 *           }); }
-	 */
 	class Handler implements MouseListener {
 		private Game game;
 
