@@ -16,7 +16,6 @@ import java.util.Observer;
 import javax.swing.*;
 
 import controller.ButtonController;
-import controller.SudokuController;
 import model.Game;
 
 public class Sudoku extends JFrame {

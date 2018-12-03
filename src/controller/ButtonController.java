@@ -1,6 +1,5 @@
 package controller;
 
-import controller.SudokuController;
 import java.awt.Color;
 import java.awt.Dimension;
 /**
