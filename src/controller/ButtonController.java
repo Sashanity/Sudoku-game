@@ -80,7 +80,7 @@ public class ButtonController {
 
 	/**
 	 * Creates new game
-	 * @author Benjamin
+	 * 
 	 *
 	 */
 	private class DoNewGameValve implements Valve {
@@ -99,7 +99,7 @@ public class ButtonController {
 	}
 	/**
 	 * Exits the game
-	 * @author Benjamin
+	 * 
 	 *
 	 */
 	private class ExitGameValve implements Valve {
