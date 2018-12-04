@@ -1,27 +1,22 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.MouseListener;
+
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 
-import java.awt.GridLayout;
-import javax.swing.JPanel;
 import model.Game;
 
-public class SudokuBoard extends JPanel implements Observer {
+public class SudokuBoard extends JPanel  {
 	public static final int SIZE = 3;
 	private Cell[][] cells;
 	private Cell[][] solution;
@@ -54,12 +49,10 @@ public class SudokuBoard extends JPanel implements Observer {
 			for (int col = 0; col < 9; col++) {
 				solution[row][col] = new Cell(col, row);
 				cells[row][col] = new Cell(col, row);
-				// cells[row][col].setAccessible(true);
 				subBoards[row / 3][col / 3].add(cells[row][col]);
-				
+
 			}
 		}
-		
 
 	}
 
@@ -70,11 +63,6 @@ public class SudokuBoard extends JPanel implements Observer {
 	public Cell[][] getSolution() {
 		return solution;
 	}
-	/*
-	 * public Cell getSelected() { Cell selected = null; for (int i = 0; i < 9; i++)
-	 * { for (int j = 0; j < 0; j++) { if (cells[i][j].isSelected) selected =
-	 * cells[i][j]; } } return selected; }
-	 */
 
 	public void setHelp(Game game) {
 		System.out.println("Setting help to board");
@@ -94,20 +82,9 @@ public class SudokuBoard extends JPanel implements Observer {
 				for (int j = 0; j < 9; j++)
 					if (cells[i][j].getBackground().equals(Color.red))
 						cells[i][j].setBackground(Color.white);
-
 		}
-
-		/*
-		 * for (int i = 0; i < 9; i++) for (int j = 0; j < 9; j++) { if
-		 * (game.getHelpArray()[i][j] == false) { cells[i][j].setBackground(Color.red);
-		 * } else if (!cells[i][j].getBackground().equals(Color.GREEN))
-		 * cells[i][j].setBackground(Color.white);
-		 * 
-		 * } if (game.isHelp() == false) { for (int i = 0; i < 9; i++) for (int j = 0; j
-		 * < 9; j++) if (!cells[i][j].getBackground().equals(Color.GREEN)) {
-		 * cells[i][j].setBackground(Color.white); } }
-		 */
 	}
+
 	/*
 	 * Adds clues to the Board
 	 */
@@ -121,10 +98,10 @@ public class SudokuBoard extends JPanel implements Observer {
 				if (game.getGameArray()[i][j] != 0) {
 					cells[i][j].setBackground(Color.green);
 				}
-
 			}
 		}
 	}
+
 	/*
 	 * Sets the board to display the solution
 	 */
@@ -133,25 +110,78 @@ public class SudokuBoard extends JPanel implements Observer {
 			for (int j = 0; j < 9; j++) {
 				if (!cells[i][j].getBackground().equals(Color.green)) {
 					cells[i][j].setBackground(Color.white);
-					// to make the board unmodifiable we need to put solution in the game.
-					// thats how it works now
-
 					game.setGameArray(game.getSolution());
 					cells[i][j].setValue(game.getGameArray()[i][j], false);
-
-					// cells[i][j].setAccessible(false);
-					// cells[i][j].isSelected = false;
-
 				}
-
 			}
 		}
 	}
+	
+	public void addMouselisteners(Game game) {
+		for (int y = 0; y < 9; y++) {
+			for (int x = 0; x < 9; x++)
+				this.getCells()[y][x].addMouseListener(new Handler(game));
+		}
+	}
+	
+
+}
+class Handler implements MouseListener {
+	private Game game;
+
+	public Handler(Game game) {
+		this.game = game;
+		// System.out.println("MouseListener attached");
+	}
 
 	@Override
-	
-	public void update(Observable arg0, Object arg1) {
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+		JLabel aLabel = (JLabel) e.getSource();
+		Component component = aLabel.getComponentAt(e.getPoint());
+		if (component instanceof Cell) {
+			Cell aCell = (Cell) component;
+			int r = aCell.getCellX();
+			int c = aCell.getCellY();
+			if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
+				System.out.println("Cell " + r + " " + c + " can be modified");
+
+				System.out.println(game.getUserInput());
+
+				game.setValue(game.getUserInput(), c, r);// sets values to the game array
+				aCell.setValue(game.getUserInput(), true);
+			} else {
+
+				System.out.println("Cell " + r + " " + c + " cannot be modified");
+				System.out.println("Value: " + game.getValue(r, c));
+			}
+		}
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

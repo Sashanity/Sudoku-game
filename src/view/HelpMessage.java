@@ -1,5 +1,7 @@
 package view;
 
-public class HelpMessage extends Message{
+public class HelpMessage extends Message {
+
+
 
 }

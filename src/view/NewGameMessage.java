@@ -1,5 +1,5 @@
 package view;
 
-public class NewGameMessage extends Message {
+public class NewGameMessage extends Message{ 
 
 }

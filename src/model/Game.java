@@ -5,7 +5,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import view.Sudoku;
+import view.View;
 import view.SudokuBoard;
 
 /**
@@ -39,7 +39,8 @@ public class Game extends Observable {
 		newGame();
 		help = false;
 		helpArray = new boolean[SIZE][SIZE];
-	}
+		
+		}
 
 	public void newGame() {
 
