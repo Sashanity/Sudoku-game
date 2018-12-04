@@ -1,25 +1,13 @@
 package controller;
 
-import java.awt.Color;
-import java.awt.Component;
-
 /**
 
  * Controller class for the Button class
  * event handler
  * @author Aleksandra, Ben, Jefferson
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
-
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-
-
 import model.*;
 import view.*;
 
