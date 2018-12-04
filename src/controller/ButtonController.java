@@ -1,5 +1,10 @@
 package controller;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 /**
 
  * Controller class for the Button class
@@ -8,6 +13,9 @@ package controller;
  */
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
+
+import javax.swing.JLabel;
+
 import model.*;
 import view.*;
 
@@ -26,7 +34,7 @@ public class ButtonController {
 		sudokuBoard = sudoku.getBoard();
 		sudokuBoard.setClues(game); // sets the clues on the board
 		buttonPad = sudoku.getButtonPad();
-		sudokuBoard.addMouselisteners(game);
+		this.addMouselisteners(game);
 		buttonPad.addActionlisteners(game);
 		mainLoop();
 	}
@@ -160,6 +168,44 @@ public class ButtonController {
 			System.out.println("SubmitGameValve Executed");
 			return ValveResponse.EXECUTED;
 		}
+	}
+	public void addMouselisteners(Game game) {
+		for (int y = 0; y < 9; y++) {
+			for (int x = 0; x < 9; x++)
+				sudokuBoard.getCells()[y][x].addMouseListener(new Handler(game));
+		}
+	}
+	class Handler extends MouseAdapter {
+		private Game game;
+
+		public Handler(Game game) {
+			this.game = game;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel aLabel = (JLabel) e.getSource();
+			Component component = aLabel.getComponentAt(e.getPoint());
+			if (component instanceof Cell) {
+				Cell aCell = (Cell) component;
+				int r = aCell.getCellX();
+				int c = aCell.getCellY();
+				if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
+					System.out.println("Cell " + r + " " + c + " can be modified");
+
+					System.out.println(game.getUserInput());
+
+					game.setValue(game.getUserInput(), c, r);// sets values to the game array
+					aCell.setValue(game.getUserInput(), true);
+				} else {
+
+					System.out.println("Cell " + r + " " + c + " cannot be modified");
+					System.out.println("Value: " + game.getValue(r, c));
+				}
+			}
+
+		}
+
 	}
 
 
