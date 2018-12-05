@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -111,10 +110,14 @@ public class SudokuBoard extends JPanel {
 			}
 		}
 	}
+	
+
+	
 	public void addMouselisteners(Game game) {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)
 				getCells()[y][x].addMouseListener(new Handler(game));
 		}
 	}
+	
 }

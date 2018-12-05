@@ -25,21 +25,12 @@ public class Handler extends MouseAdapter {
 			Cell aCell = (Cell) component;
 			int r = aCell.getCellX();
 			int c = aCell.getCellY();
-			if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
-				System.out.println("Cell " + r + " " + c + " can be modified");
-
-				System.out.println(game.getUserInput());
-
-				game.setValue(game.getUserInput(), c, r);// sets values to the game array
+			if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {				
+				game.setValue(game.getUserInput(), c, r);
 				aCell.setValue(game.getUserInput(), true);
-			} else {
-
-				System.out.println("Cell " + r + " " + c + " cannot be modified");
-				System.out.println("Value: " + game.getValue(r, c));
-			}
+			} 
 		}
 
 	}
 
 }
-

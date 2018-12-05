@@ -1,20 +1,14 @@
 package controller;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 /**
-
- * Controller class for the Button class
- * event handler
- * @author Aleksandra, Ben, Jefferson
+ * A controller class
+ * Changes the View(SudokuBoard,java) and Model(Game.java) of the game
  */
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import model.*;
 import view.*;
@@ -23,23 +17,31 @@ public class ButtonController {
 	private SudokuBoard sudokuBoard;
 	private ButtonPad buttonPad;
 	private Game game;
-	private View sudoku;
 	private LinkedList<Valve> valves = new LinkedList<Valve>();
 	private BlockingQueue<Message> queue;
 
+	/**
+	 * 
+	 * @param sudoku main JFrame of the game sudoku
+	 * @param game   current game
+	 * @param queue
+	 * @throws Exception
+	 */
 	public ButtonController(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
-		this.sudoku = sudoku;
 		this.game = game;
 		this.queue = queue;
 		sudokuBoard = sudoku.getBoard();
-		sudokuBoard.setClues(game); // sets the clues on the board
+		sudokuBoard.setClues(game); 
 		buttonPad = sudoku.getButtonPad();
 		sudokuBoard.addMouselisteners(game);
-		// this.addMouselisteners(game);
 		buttonPad.addActionlisteners(game);
 		mainLoop();
 	}
 
+	/**
+	 * 
+	 * @return a BlockingQueue object 
+	 */
 	public BlockingQueue<Message> getQueue() {
 		return queue;
 	}
@@ -80,6 +82,27 @@ public class ButtonController {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS;
 			}
+			System.out.println("NEW GAME");
+			String[] options = {"easy", "hard"};
+			int choice = JOptionPane.showOptionDialog(null, "Difficulty level",
+	                "Choose Level of Difficulty",
+	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			
+			if (choice==0 && game.getDifficulty() == 0)
+				game.newGame();
+			else 
+				if (choice==0 && game.getDifficulty() == 1)
+					game = new EasyGame();
+			else 
+				if (choice==1 && game.getDifficulty() == 0)
+					game = new HardGame();
+			else
+				if (choice==1 && game.getDifficulty() == 1)
+					game.newGame();
+				
+
+
+				
 			game.newGame();// creates a new game
 			game.setStartTime(System.currentTimeMillis());// resets the game start time to
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
@@ -106,8 +129,11 @@ public class ButtonController {
 		}
 	}
 
-	/*
+
+	/**
 	 * Shows the games solution on the board
+	 * @author Aleksandra
+	 *
 	 */
 	private class GetSolutionValve implements Valve {
 		@Override
@@ -123,9 +149,9 @@ public class ButtonController {
 		}
 	}
 
-	/*
-	 * 
+	/**
 	 * Toggles help on or off Removes 3 points from score everytime help is used
+	 *
 	 */
 	private class GetHelpValve implements Valve {
 		@Override
@@ -154,6 +180,11 @@ public class ButtonController {
 
 	}
 
+	/**
+	 * 
+	 * 
+	 *
+	 */
 	private class SubmitGameValve implements Valve {
 		@Override
 		public ValveResponse execute(Message message) {
@@ -165,4 +196,7 @@ public class ButtonController {
 			return ValveResponse.EXECUTED;
 		}
 	}
+	
+
+	
 }

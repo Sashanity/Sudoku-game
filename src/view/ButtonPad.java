@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import model.Game;
-public class ButtonPad extends JPanel  {
+
+public class ButtonPad extends JPanel {
 
 	private JButton solutionButton, newGameButton, exitButton, submitButton; // buttons used in the game.
 	private JCheckBox helpButton;
@@ -109,7 +110,7 @@ public class ButtonPad extends JPanel  {
 		helpButton.setToolTipText("Toggle on to see which cells are correct/incorrect");
 		helpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				try {
 					queue.put(new HelpMessage());
 				} catch (InterruptedException exception) {
@@ -124,11 +125,11 @@ public class ButtonPad extends JPanel  {
 		// KEY BUTTONS
 		// ------------------
 		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
-		panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers"));
+		//panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers"));
 		panelNumbers.setPreferredSize(new Dimension(200, 400));
 		aPanel.add(panelNumbers);
 
-		// panelNumbers.add(helpButton); // maybe put help in diff position
+		
 		keypad = new ButtonGroup();
 		keypadNumbers = new JToggleButton[9];
 
@@ -137,14 +138,16 @@ public class ButtonPad extends JPanel  {
 			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
 			keypad.add(keypadNumbers[i]);
 			panelNumbers.add(keypadNumbers[i]);
+			
 		}
-		
-	
+
 	}
+
+	
 	public void addActionlisteners(Game game) {
 		for (int i = 0; i < 9; i++)
 			this.getKeypadNumbers()[i].addActionListener(new ActionListener() {
-				
+
 				public void actionPerformed(ActionEvent e) {
 					game.setUserInput(Integer.parseInt(e.getActionCommand()));
 
@@ -153,6 +156,8 @@ public class ButtonPad extends JPanel  {
 			});
 	}
 
+
+	
 	public JButton getSolutionButton() {
 		return solutionButton;
 	}

@@ -6,10 +6,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import controller.ButtonController;
+import model.EasyGame;
 import model.Game;
+import model.HardGame;
 
 public class Sudoku {
 
@@ -25,7 +28,16 @@ public class Sudoku {
 			ex.printStackTrace();
 		}
 		sudoku = new View(queue);
-		game = new Game();
+		
+		String[] options = {"easy", "hard"};
+		int choice = JOptionPane.showOptionDialog(null, "Difficulty level",
+                "Choose Level of Difficulty",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		
+		if (choice==0)
+			game = new EasyGame();
+		else
+			game = new HardGame();
 		ButtonController controller = new ButtonController(sudoku, game, queue);
 		queue.clear();
 	}

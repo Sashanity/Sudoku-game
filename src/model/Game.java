@@ -10,13 +10,14 @@ import javax.swing.JOptionPane;
  * @author Aleksandra, Ben, Jefferson
  *
  */
-public class Game extends Observable {
+public abstract  class Game  {
 	static final int SIZE = 9;
 	static final int MIN_NUM_CLUES = 17;
 	private int[][] solution;
 	private int[][] game; // current game; created after shuffling solution;
 	private int userInput;
 	private boolean[][] helpArray;
+	private int difficulty;
 	long startTime;
 	long endTime;
 	int totalMistakes = 0;
@@ -48,6 +49,8 @@ public class Game extends Observable {
 			for (int j = 0; j < SIZE; j++)
 				this.game[i][j] = 0;
 		// add clues
+		addClues(solution);
+		/*
 		for (int i = 0; i < MIN_NUM_CLUES; i++) {
 			randRow = new Random().nextInt(SIZE);
 			randCol = new Random().nextInt(SIZE);
@@ -59,13 +62,16 @@ public class Game extends Observable {
 			}
 		}
 		System.out.println();
+		
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
 				System.out.print(this.getGameArray()[i][j]);
 			}
 			System.out.println("");
-		}
+		}*/
 	}
+	
+	abstract public void addClues(int[][] aSolution);
 
 	/**
 	 * 
@@ -101,7 +107,7 @@ public class Game extends Observable {
 	 */
 	public void setValue(int aValue, int r, int c) {
 		game[r][c] = aValue;
-		setChanged();
+		
 		System.out.println();
 
 		for (int i = 0; i < 9; i++) {
@@ -273,6 +279,14 @@ public class Game extends Observable {
 			JOptionPane.showMessageDialog(null, scoreDetails, "Score", JOptionPane.PLAIN_MESSAGE);
 			score = score - totalMistakes;
 		}
+	}
+
+	public int getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 
 }
