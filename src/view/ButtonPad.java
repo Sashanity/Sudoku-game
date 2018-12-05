@@ -1,5 +1,13 @@
 package view;
 
+/**
+ * Instance of the class is an object that includes 2 panels with
+ * Main game buttons and Keypad buttons.
+ *  
+ * @author Aleksandra, Ben, Jefferson
+ *
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +16,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,14 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import model.Game;
 
-/**
- * Class used for making Button pad which allows users to interact with GUI
- * 
- * @author Aleksandra, Ben, Jefferson
- *
- */
 public class ButtonPad extends JPanel {
-	private JButton solutionButton, newGameButton, exitButton, submitButton; // buttons used in the game.
+	private JButton solutionButton, newGameButton, exitButton, submitButton;
 	private JCheckBox helpButton;
 	private ButtonGroup keypad;
 	private JToggleButton[] keypadNumbers;
@@ -32,9 +33,10 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Creates button pad
+
+	 * @param queue takes messages that will result in updates in the game =======
+	 * @param queue takes messages that will result in updates in the game
 	 * 
-	 * @param queue
-	 *            takes messages that will result in updates in the game
 	 */
 	public ButtonPad(BlockingQueue<Message> queue) {
 		super(new BorderLayout());
@@ -45,7 +47,6 @@ public class ButtonPad extends JPanel {
 
 		JPanel panelGameOptions = new JPanel();
 		panelGameOptions.setLayout(new FlowLayout(FlowLayout.CENTER));
-		panelGameOptions.setBorder(BorderFactory.createTitledBorder("panelGameOptions"));
 		aPanel.add(panelGameOptions);
 
 		// ------------------
@@ -144,8 +145,8 @@ public class ButtonPad extends JPanel {
 	/**
 	 * Action listeners that will track actions performed and update model
 	 * 
-	 * @param game
-	 *            the current game being played
+	 * @param game the current game being played 
+	 * @param game the current game being played 
 	 */
 	public void addActionlisteners(Game game) {
 		for (int i = 0; i < 9; i++)

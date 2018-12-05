@@ -4,27 +4,28 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
-
 import model.Game;
 import view.Cell;
 
-/*
- * Sets userinput values on the viewable board. Also makes sure to modify them in the model.
+/**
+ * Sets userinput values on the viewable board. Also makes sure to modify them
+ * in the model.
+ * @author Aleksandra, Ben, Jefferson
  */
 public class Handler extends MouseAdapter {
 	private Game game;
 
-	/*
-	 * @param the game that Handler is modifying cells for
+	/**
+	 * 
+	 * @param game that Handler is modifying cells for
 	 */
 	public Handler(Game game) {
 		this.game = game;
 	}
 
 	@Override
-	/*
+	/**
 	 * 
 	 * (non-Javadoc)
 	 * 

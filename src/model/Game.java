@@ -1,32 +1,35 @@
 package model;
 
-import java.util.Observable;
-import java.util.Random;
-import javax.swing.JOptionPane;
-
 /**
- * Generates a new sudoku solution user input
+ * An abstract class of the Model.
+ * Instance of this class is a current game situation
+ * It has current 2D array with current game, 
+ * reference to 2D solution array
+ * keeps track of score
  * 
  * @author Aleksandra, Ben, Jefferson
  *
  */
+
+import javax.swing.JOptionPane;
+
 public abstract class Game {
 	static final int SIZE = 9;
 	static final int MIN_NUM_CLUES = 17;
 	private int[][] solution;
-	private int[][] game; // current game; created after shuffling solution;
+	private int[][] game;
 	private int userInput;
 	private boolean[][] helpArray;
+	private boolean help;
 	private int difficulty;
 	long startTime;
 	long endTime;
 	int totalMistakes = 0;
 
-	private boolean help;
 	int score = 1000;
 
 	/**
-	 * Constructor starts help boolean as false
+	 * Default constructor
 	 * 
 	 */
 	public Game() {
@@ -43,24 +46,20 @@ public abstract class Game {
 	 */
 	public void newGame() {
 		this.solution = new SolutionCreator().getSolution();
-		int randCol, randRow, value;
-		// first zero the game
+
+		// first zero the game array
 		for (int i = 0; i < SIZE; i++)
 			for (int j = 0; j < SIZE; j++)
 				this.game[i][j] = 0;
-		// add clues
+
 		addClues(solution);
-		/*
-		 * for (int i = 0; i < MIN_NUM_CLUES; i++) { randRow = new
-		 * Random().nextInt(SIZE); randCol = new Random().nextInt(SIZE); value =
-		 * solution[randRow][randCol]; if (game[randRow][randCol] == 0) setValue(value,
-		 * randRow, randCol); else { i--; } } System.out.println();
-		 * 
-		 * for (int i = 0; i < 9; i++) { for (int j = 0; j < 9; j++) {
-		 * System.out.print(this.getGameArray()[i][j]); } System.out.println(""); }
-		 */
+
 	}
 
+	/**
+	 * 
+	 * @param aSolution 2D int array solution for the udoku
+	 */
 	abstract public void addClues(int[][] aSolution);
 
 	/**
@@ -74,8 +73,7 @@ public abstract class Game {
 	/**
 	 * Sets the 2d array of game to the current game array that is to be played
 	 * 
-	 * @param array
-	 *            the new 2d game array
+	 * @param array the new 2d game array
 	 */
 	public void setGameArray(int[][] array) {
 		for (int i = 0; i < 9; i++) {
@@ -85,35 +83,32 @@ public abstract class Game {
 		}
 	}
 
+	/**
+	 * Gets a number from the game array at given position
+	 * 
+	 * @param x column
+	 * @param y row
+	 * @return a number at given position
+	 */
 	public int getValue(int x, int y) {
 		return game[y][x];
 	}
 
 	/**
-	 * Sets up the value of the cell from user
+	 * Sets up the value to a certain position of game array
 	 * 
-	 * @param aValue
-	 *            is the number to set to a selected position
-	 * @param x
-	 *            X position of cell
-	 * @param y
-	 *            Y position of the cell
+	 * @param aValue number to be set
+	 * @param r      row position of value
+	 * @param c      column position of value
 	 */
 	public void setValue(int aValue, int r, int c) {
 		game[r][c] = aValue;
-
-		System.out.println();
-
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				System.out.print(this.getGameArray()[i][j]);
-			}
-			System.out.println("");
-		}
 	}
 
 	/**
-	 * Change the help flag true/false
+	 * Sets the help flag true/false
+	 * 
+	 * @param help boolean value of the help to be set
 	 */
 	public void setHelp(boolean help) {
 		this.help = help;
@@ -121,6 +116,7 @@ public abstract class Game {
 	}
 
 	/**
+	 * getter for help value
 	 * 
 	 * @return the boolean value of the help instance variable
 	 */
@@ -129,6 +125,7 @@ public abstract class Game {
 	}
 
 	/**
+	 * getter for the solution array
 	 * 
 	 * @return the 2d array of the game's solution
 	 */
@@ -137,10 +134,9 @@ public abstract class Game {
 	}
 
 	/**
-	 * Method to set a cell based on the users input
+	 * Sets a number that was chosen from a keypad.
 	 * 
-	 * @param keyPadNum
-	 *            Value that user selects from the button key pad
+	 * @param keyPadNum Number that user selects from the button key pad
 	 */
 	public void setUserInput(int keyPadNum) {
 		this.userInput = keyPadNum;
@@ -168,17 +164,15 @@ public abstract class Game {
 	/**
 	 * Sets the start time of the application/game
 	 * 
-	 * @param n
-	 *            The starting time of the application/game
+	 * @param n The starting time of the application/game
 	 */
+
 	public void setStartTime(long n) {
 		startTime = n;
 	}
 
 	/**
-	 * Checks if user asked for help, creates the boolean help array
-	 * 
-	 * @return the value of help
+	 * Sets the booleaan HelpArray based on the values of the game array
 	 */
 	public void gameCheck() {
 		for (int i = 0; i < SIZE; i++)
@@ -278,10 +272,18 @@ public abstract class Game {
 		}
 	}
 
+	/**
+	 * 
+	 * @return difficulty level of the game (0 or 1)
+	 */
 	public int getDifficulty() {
 		return difficulty;
 	}
 
+	/**
+	 * 
+	 * @param difficulty difficulty level of the game
+	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}

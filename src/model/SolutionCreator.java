@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class represents a solution for a sudoku 
+ * @author Aleksandra, Ben, Jefferson
+ */
 import java.util.Random;
 
 public class SolutionCreator {
@@ -21,6 +25,11 @@ public class SolutionCreator {
 		return firstBoard;
 	}
 
+	/**
+	 * Shuffling the initial solvable board
+	 * 
+	 * @param an int 2D array to shuffle
+	 */
 	private void shuffleBoard(int[][] a) {
 		shuffle_inGroup(a, 0);
 		shuffle_inGroup(a, 1);
@@ -28,6 +37,13 @@ public class SolutionCreator {
 		shuffle_random(a, 1);
 	}
 
+	/**
+	 * Shuffle columns or rows randomly based on the rule that 0,3, and 6 could be
+	 * switched
+	 * 
+	 * @param a    an int 2D array to modify
+	 * @param flag 0 or 1 to decide shuffle columns(1) or rows(1)
+	 */
 	private void shuffle_random(int[][] a, int flag) {
 		Random random = new Random();
 		int[] tmp = { 0, 3, 6 };
@@ -45,6 +61,13 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * Swaps two given columns
+	 * 
+	 * @param a  an int 2D array to modify
+	 * @param k1 one column
+	 * @param k2 another column
+	 */
 	private void changeCol_random(int[][] a, int k1, int k2) {
 		int temp;
 		for (int n = 1; n <= 3; n++) {
@@ -58,6 +81,13 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * Swaps two given rows
+	 * 
+	 * @param a  2D int array to be shuffled
+	 * @param k1 one row
+	 * @param k2 another row
+	 */
 	private void changeRow_random(int[][] a, int k1, int k2) {
 		int temp;
 		for (int n = 1; n <= 3; n++) {
@@ -71,6 +101,12 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * Shuffles rows or columns within a group of 3: 1-3, 4-6, or 7-9
+	 * 
+	 * @param tmp  2D int array to be shuffled
+	 * @param flag 0 or 1 to decide shuffle columns(1) or rows(1)
+	 */
 	private void shuffle_inGroup(int[][] tmp, int flag) {
 		int k1, k2, min = 0, max = 2;
 		Random random = new Random();
@@ -88,6 +124,14 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * 
+	 * Shuffles rows within a group 1-3, 4-6, or 7-9
+	 * 
+	 * @param a  an int 2D array to be shuffled
+	 * @param r1 one row
+	 * @param r2 another row
+	 */
 	private void changeRow_inGroup(int[][] a, int r1, int r2) {
 		int[] tmp = new int[SIZE];
 		for (int i = 0; i < SIZE; i++)
@@ -98,6 +142,13 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * Shuffles Columns within a group 1-3, 4-6, or 7-9
+	 * 
+	 * @param a  an int 2D array to be shuffled
+	 * @param c1 one column
+	 * @param c2 another column
+	 */
 	private void changeCol_inGroup(int[][] a, int c1, int c2) {
 		int[] tmp = new int[SIZE];
 		for (int i = 0; i < SIZE; i++)
@@ -108,6 +159,9 @@ public class SolutionCreator {
 		}
 	}
 
+	/**
+	 * Creates a firstboard - initial solvable sudoku
+	 */
 	private void createBoard() {
 		int k = 1, n = 1;
 		for (int r = 0; r < SIZE; r++) {

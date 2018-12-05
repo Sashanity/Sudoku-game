@@ -23,10 +23,8 @@ public class Cell extends JLabel {
 	/**
 	 * Constructor of a cell, settings of a cell
 	 * 
-	 * @param x
-	 *            X coordinate of cell location
-	 * @param y
-	 *            Y coordinate of cell location
+	 * @param x X coordinate of cell location
+	 * @param y Y coordinate of cell location
 	 */
 	public Cell(int x, int y) {
 		super("", CENTER);
@@ -43,10 +41,8 @@ public class Cell extends JLabel {
 	/**
 	 * Sets the value of a cell based on parameters
 	 * 
-	 * @param num
-	 *            Number that the cell will be set to
-	 * @param userInput
-	 *            Determines whether or not cell should be changed
+	 * @param num       Number that the cell will be set to
+	 * @param userInput Determines whether or not cell should be changed
 	 */
 	public void setValue(int num, boolean userInput) {
 		setForeground(userInput ? Color.BLUE : Color.BLACK);

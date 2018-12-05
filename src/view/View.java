@@ -19,9 +19,8 @@ public class View extends JFrame {
 	/**
 	 * Construct UI of game, adding different view components together
 	 * 
-	 * @param queue
-	 *            used to hold messages that will be used to change stuff in the
-	 *            game
+	 * @param queue used to hold messages that will be used to change stuff in the
+	 *              game
 	 */
 	public View(BlockingQueue<Message> queue) {
 		super("SUDOKU");
