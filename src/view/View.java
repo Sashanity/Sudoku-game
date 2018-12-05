@@ -3,18 +3,24 @@ package view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.BlockingQueue;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * Class used for UI of the Game
+ * 
+ * @author Aleksandra, Ben, Jefferson
+ *
+ */
 public class View extends JFrame {
-
-	
 	private ButtonPad buttonPanel;
 	private SudokuBoard sudokuBoard;
 
+	/**
+	 * Construct UI of game, adding different view components together
+	 * @param queue used to hold messages that will be used to change stuff in the game
+	 */
 	public View(BlockingQueue<Message> queue) {
-
 		super("SUDOKU");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout());
@@ -89,15 +95,21 @@ public class View extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
-
 	}
 
+	/**
+	 * Gets button pad
+	 * @return button pad
+	 */
 	public ButtonPad getButtonPad() {
 		return buttonPanel;
 	}
 
+	/**
+	 * Gets board
+	 * @return board
+	 */
 	public SudokuBoard getBoard() {
 		return sudokuBoard;
 	}
-
 }

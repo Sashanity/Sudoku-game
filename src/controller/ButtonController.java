@@ -73,7 +73,6 @@ public class ButtonController {
 	/**
 	 * Creates new game
 	 * 
-	 *
 	 */
 	private class DoNewGameValve implements Valve {
 
@@ -114,7 +113,6 @@ public class ButtonController {
 	/**
 	 * Exits the game
 	 * 
-	 *
 	 */
 	private class ExitGameValve implements Valve {
 		@Override
@@ -132,8 +130,7 @@ public class ButtonController {
 
 	/**
 	 * Shows the games solution on the board
-	 * @author Aleksandra
-	 *
+	 * 
 	 */
 	private class GetSolutionValve implements Valve {
 		@Override
@@ -150,7 +147,7 @@ public class ButtonController {
 	}
 
 	/**
-	 * Toggles help on or off Removes 3 points from score everytime help is used
+	 * Toggles help on or off Removes 3 points from score every time help is used
 	 *
 	 */
 	private class GetHelpValve implements Valve {
