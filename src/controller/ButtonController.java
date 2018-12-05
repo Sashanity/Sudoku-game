@@ -34,7 +34,8 @@ public class ButtonController {
 		sudokuBoard = sudoku.getBoard();
 		sudokuBoard.setClues(game); // sets the clues on the board
 		buttonPad = sudoku.getButtonPad();
-		this.addMouselisteners(game);
+		sudokuBoard.addMouselisteners(game, new Handler(game));
+		// this.addMouselisteners(game);
 		buttonPad.addActionlisteners(game);
 		mainLoop();
 	}
@@ -65,8 +66,7 @@ public class ButtonController {
 		}
 	}
 
-	
-// VALVES
+	// VALVES
 
 	/**
 	 * Creates new game
@@ -134,9 +134,6 @@ public class ButtonController {
 				return ValveResponse.MISS;
 			}
 
-			
-
-				
 			if (!game.isHelp()) {
 				game.setHelp(true);
 				System.out.println("Help on");
@@ -150,8 +147,7 @@ public class ButtonController {
 				sudokuBoard.setHelp(game);
 
 			}
-			
-			
+
 			System.out.println("GetHelpValve Executed");
 			return ValveResponse.EXECUTED;
 		}
@@ -169,44 +165,4 @@ public class ButtonController {
 			return ValveResponse.EXECUTED;
 		}
 	}
-	public void addMouselisteners(Game game) {
-		for (int y = 0; y < 9; y++) {
-			for (int x = 0; x < 9; x++)
-				sudokuBoard.getCells()[y][x].addMouseListener(new Handler(game));
-		}
-	}
-	class Handler extends MouseAdapter {
-		private Game game;
-
-		public Handler(Game game) {
-			this.game = game;
-		}
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			JLabel aLabel = (JLabel) e.getSource();
-			Component component = aLabel.getComponentAt(e.getPoint());
-			if (component instanceof Cell) {
-				Cell aCell = (Cell) component;
-				int r = aCell.getCellX();
-				int c = aCell.getCellY();
-				if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
-					System.out.println("Cell " + r + " " + c + " can be modified");
-
-					System.out.println(game.getUserInput());
-
-					game.setValue(game.getUserInput(), c, r);// sets values to the game array
-					aCell.setValue(game.getUserInput(), true);
-				} else {
-
-					System.out.println("Cell " + r + " " + c + " cannot be modified");
-					System.out.println("Value: " + game.getValue(r, c));
-				}
-			}
-
-		}
-
-	}
-
-
 }

@@ -1,19 +1,16 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import controller.ButtonController;
 import model.Game;
 
-public class SudokuBoard extends JPanel  {
+public class SudokuBoard extends JPanel {
 	public static final int SIZE = 3;
 	private Cell[][] cells;
 	private Cell[][] solution;
@@ -112,5 +109,11 @@ public class SudokuBoard extends JPanel  {
 				}
 			}
 		}
-	}	
+	}
+	public void addMouselisteners(Game game, controller.Handler handler) {
+		for (int y = 0; y < 9; y++) {
+			for (int x = 0; x < 9; x++)
+				getCells()[y][x].addMouseListener(handler);
+		}
+	}
 }

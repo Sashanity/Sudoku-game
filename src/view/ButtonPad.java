@@ -125,6 +125,7 @@ public class ButtonPad extends JPanel  {
 		// ------------------
 		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
 		panelNumbers.setBorder(BorderFactory.createTitledBorder("panelNumbers"));
+		panelNumbers.setPreferredSize(new Dimension(200, 400));
 		aPanel.add(panelNumbers);
 
 		// panelNumbers.add(helpButton); // maybe put help in diff position
