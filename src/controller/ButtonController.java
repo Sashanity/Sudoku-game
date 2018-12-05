@@ -34,7 +34,7 @@ public class ButtonController {
 		sudokuBoard = sudoku.getBoard();
 		sudokuBoard.setClues(game); // sets the clues on the board
 		buttonPad = sudoku.getButtonPad();
-		sudokuBoard.addMouselisteners(game, new Handler(game));
+		sudokuBoard.addMouselisteners(game);
 		// this.addMouselisteners(game);
 		buttonPad.addActionlisteners(game);
 		mainLoop();

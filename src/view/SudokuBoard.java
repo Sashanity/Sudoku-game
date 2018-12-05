@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import controller.ButtonController;
+import controller.Handler;
 import model.Game;
 
 public class SudokuBoard extends JPanel {
@@ -110,10 +111,10 @@ public class SudokuBoard extends JPanel {
 			}
 		}
 	}
-	public void addMouselisteners(Game game, controller.Handler handler) {
+	public void addMouselisteners(Game game) {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)
-				getCells()[y][x].addMouseListener(handler);
+				getCells()[y][x].addMouseListener(new Handler(game));
 		}
 	}
 }
