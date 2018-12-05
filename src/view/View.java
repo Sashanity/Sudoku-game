@@ -59,7 +59,7 @@ public class View extends JFrame {
 				+ "\n" + "\n"
 				+ "This rule also applies to rows and columns. This means that within a row or column of the sudoku board, the correct answer will not have a repeated number (1-9)."
 				+ "\n" + "\n" + "Good luck with the game!";
-		String sudokuButtonInfo = "User inteface information:" + "\n"
+		String sudokuButtonInfo = "User interface information:" + "\n"
 				+ "The 'New Game' button will generate and display a new game." + "\n"
 				+ "Clicking this button will result in the game score, mistakes, and time elapsed to be reset/cleared."
 				+ "\n" + "\n" + "The 'Solution' button will display the solution to the current board." + "\n"

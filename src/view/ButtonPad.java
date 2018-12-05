@@ -22,7 +22,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-
 import messages.ExitGameMessage;
 import messages.HelpMessage;
 import messages.Message;
@@ -40,25 +39,85 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Creates button pad
-
-	 * @param queue takes messages that will result in updates in the game =======
 	 * @param queue takes messages that will result in updates in the game
 	 * 
 	 */
 	public ButtonPad(BlockingQueue<Message> queue) {
-		super(new BorderLayout());
+		//super(new BorderLayout());
 		this.queue = queue;
-		JPanel aPanel = new JPanel();
-		aPanel.setLayout(new BoxLayout(aPanel, BoxLayout.Y_AXIS));
-		add(aPanel, BorderLayout.NORTH);
+		
+		//aPanel is used to contain other panels 
+		//containing button pad panel and option panel
+		JPanel containerPanel = new JPanel();
+		containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
+		add(containerPanel, BorderLayout.NORTH);
 
+		//Game options panel containing game buttons
 		JPanel panelGameOptions = new JPanel();
 		panelGameOptions.setLayout(new FlowLayout(FlowLayout.CENTER));
-		aPanel.add(panelGameOptions);
+		containerPanel.add(panelGameOptions);
 
 		// ------------------
 		// MAIN BUTTONS OF THE GAME
 		// ------------------
+		
+		//Creates game buttons
+		createNewGameButton();
+		createSolutionButton();
+		createExitButton();
+		createSubmitButton();
+		createHelpBox();
+		
+		//Adds game buttons to game panel
+		panelGameOptions.add(newGameButton);
+		panelGameOptions.add(solutionButton);
+		panelGameOptions.add(submitButton);
+		panelGameOptions.add(exitButton);
+		panelGameOptions.add(helpButton);
+
+		// ------------------
+		// KEY BUTTONS
+		// ------------------
+		
+		//Key pad panel consisting of numbers 1-9, used for user to change cells
+		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
+		panelNumbers.setPreferredSize(new Dimension(200, 400));
+		
+		//Adding key pad panel (with key pad buttons numbers 1-9)
+		containerPanel.add(panelNumbers);
+		keypad = new ButtonGroup();
+		keypadNumbers = new JToggleButton[9];
+		//Adds toggle buttons (1-9) to the key pad panel
+		for (int i = 0; i < 9; i++) {
+			keypadNumbers[i] = new JToggleButton("" + (i + 1));
+			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
+			keypad.add(keypadNumbers[i]);
+			panelNumbers.add(keypadNumbers[i]);
+		}
+	}
+	
+	/**
+	 * Action listeners that will track actions performed and update model
+	 * 
+	 * @param game the current game being played 
+	 * @param game the current game being played 
+	 */
+	public void addActionlisteners(Game game) {
+		for (int i = 0; i < 9; i++)
+			this.getKeypadNumbers()[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					game.setUserInput(Integer.parseInt(e.getActionCommand()));
+				}
+			});
+	}
+
+	/**
+	 * Creates new game button, used to determine when a new game should be generated.
+	 * Sends a message to queue, to update board if button is clicked.
+	 * 
+	 * @return new game button that has action listener
+	 */
+	public JButton createNewGameButton() {
 		newGameButton = new JButton("New Game");
 		newGameButton.setPreferredSize(new Dimension(100, 30));
 		newGameButton.addActionListener(new ActionListener() {
@@ -70,7 +129,16 @@ public class ButtonPad extends JPanel {
 				}
 			}
 		});
-
+		return newGameButton;
+	}
+	
+	/**
+	 * Creates solution button, used to generate solution to board.
+	 * Sends a message to queue, to update board if button is clicked.
+	 * 
+	 * @return solution button that has action listener
+	 */
+	public JButton createSolutionButton() {
 		solutionButton = new JButton("Solution");
 		solutionButton.setPreferredSize(new Dimension(100, 30));
 		solutionButton.setToolTipText("See the solution!");
@@ -83,7 +151,38 @@ public class ButtonPad extends JPanel {
 				}
 			}
 		});
-
+		return solutionButton;
+	}
+	
+	/**
+	 * Creates submit button, used to determine when a user submits their current work.
+	 * Sends a message to queue, to update board if button is clicked.
+	 * 
+	 * @return submit button that has action listener
+	 */
+	public JButton createSubmitButton() {
+		submitButton = new JButton("Submit");
+		submitButton.setPreferredSize(new Dimension(100, 30));
+		submitButton.setToolTipText("Check if your input is correct!");
+		submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					queue.put(new SubmitGameMessage());
+				} catch (InterruptedException exception) {
+					exception.printStackTrace();
+				}
+			}
+		});
+		return submitButton;
+	}
+	
+	/**
+	 * Creates exit button, used to determine when a user wishes to close application.
+	 * Sends message to queue, to close window after button is clicked.
+	 * 
+	 * @return exit button that has action listener
+	 */
+	public JButton createExitButton() {
 		exitButton = new JButton("Exit");
 		exitButton.setPreferredSize(new Dimension(100, 30));
 		exitButton.addActionListener(new ActionListener() {
@@ -96,26 +195,16 @@ public class ButtonPad extends JPanel {
 			}
 
 		});
-
-		submitButton = new JButton("Submit");
-		submitButton.setPreferredSize(new Dimension(100, 30));
-		submitButton.setToolTipText("Check if your input is correct!");
-		submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					queue.put(new SubmitGameMessage());
-				} catch (InterruptedException exception) {
-					exception.printStackTrace();
-				}
-			}
-
-		});
-
-		panelGameOptions.add(newGameButton);
-		panelGameOptions.add(solutionButton);
-		panelGameOptions.add(submitButton);
-		panelGameOptions.add(exitButton);
-
+		return exitButton;
+	}
+	
+	/**
+	 * Creates help check box, used to determine when a user wishes to view their mistakes.
+	 * Sends message to queue when box is checked, to display help for user.
+	 * 
+	 * @return help check box that has action listener
+	 */
+	public JCheckBox createHelpBox() {
 		helpButton = new JCheckBox("Help", false);
 		helpButton.setBackground(Color.green);
 		helpButton.setPreferredSize(new Dimension(75, 30));
@@ -129,94 +218,8 @@ public class ButtonPad extends JPanel {
 					exception.printStackTrace();
 				}
 			}
-
 		});
-		panelGameOptions.add(helpButton);
-
-		// ------------------
-		// KEY BUTTONS
-		// ------------------
-		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
-		panelNumbers.setPreferredSize(new Dimension(200, 400));
-		aPanel.add(panelNumbers);
-		keypad = new ButtonGroup();
-		keypadNumbers = new JToggleButton[9];
-		for (int i = 0; i < 9; i++) {
-			keypadNumbers[i] = new JToggleButton("" + (i + 1));
-			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
-			keypad.add(keypadNumbers[i]);
-			panelNumbers.add(keypadNumbers[i]);
-		}
-	}
-
-	/**
-	 * Action listeners that will track actions performed and update model
-	 * 
-	 * @param game the current game being played 
-	 * @param game the current game being played 
-	 */
-	public void addActionlisteners(Game game) {
-		for (int i = 0; i < 9; i++)
-			this.getKeypadNumbers()[i].addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					game.setUserInput(Integer.parseInt(e.getActionCommand()));
-
-				}
-			});
-	}
-
-	/**
-	 * Gets solution button
-	 * 
-	 * @return solution button
-	 */
-	public JButton getSolutionButton() {
-		return solutionButton;
-	}
-
-	/**
-	 * Gets new game button
-	 * 
-	 * @return new game button
-	 */
-	public JButton getNewGameButton() {
-		return newGameButton;
-	}
-
-	/**
-	 * Gets exit button
-	 * 
-	 * @return exit button
-	 */
-	public JButton getExitButton() {
-		return exitButton;
-	}
-
-	/**
-	 * Gets help check box button
-	 * 
-	 * @return help check box
-	 */
-	public JCheckBox getHelpButton() {
 		return helpButton;
-	}
-
-	/**
-	 * Gets key pad
-	 * 
-	 * @return key pad
-	 */
-	public ButtonGroup getKeypad() {
-		return keypad;
-	}
-
-	/**
-	 * Gets submit button
-	 * 
-	 * @return submit button
-	 */
-	public JButton getSubmitButton() {
-		return submitButton;
 	}
 
 	/**
@@ -227,5 +230,5 @@ public class ButtonPad extends JPanel {
 	public JToggleButton[] getKeypadNumbers() {
 		return keypadNumbers;
 	}
-
+	
 }
