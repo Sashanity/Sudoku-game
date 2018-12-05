@@ -95,6 +95,7 @@ public class ButtonController {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS; // code will not execute
 			}
+			/*
 			String[] options = { "easy", "hard" };
 			int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -104,13 +105,20 @@ public class ButtonController {
 				game.newGame();
 			else if (choice == 0 && game.getDifficulty() == 1) // user chooses easy game, current difficulty is hard.
 				// change difficulty to easy by creating a new EasyGame
+			
 				game = new EasyGame();
+				
+			
+			
 			else if (choice == 1 && game.getDifficulty() == 0)// user chooses hard game, current difficulty is easy.
 				// change difficulty to hard by creating a new HardGame
 				game = new HardGame();
 			else if (choice == 1 && game.getDifficulty() == 1)// if user chooses hard and difficulty was already hard,
+					
 																// just create new game.
 				game.newGame();
+				*/
+			game.newGame();
 			game.setStartTime(System.currentTimeMillis());// resets the game start time to 0
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
 			return ValveResponse.EXECUTED;
@@ -175,14 +183,14 @@ public class ButtonController {
 
 			if (!game.isHelp()) {// toggle on
 				game.setHelp(true);
-				System.out.println("Help on");
+				//System.out.println("Help on");
 				game.gameCheck();
 				sudokuBoard.setHelp(game);
 				game.subtractPoints();// remove 3 points
 			}
 
 			else {// toggle off
-				System.out.println("Help off");
+				//System.out.println("Help off");
 				game.setHelp(false);
 				sudokuBoard.setHelp(game);
 
