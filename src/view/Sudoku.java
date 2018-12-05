@@ -10,7 +10,8 @@ import model.Game;
 import model.HardGame;
 
 /**
- * Class used for Sudoku game, combines views and controllers, uses queue to receive messages and update game
+ * Class used for Sudoku game, combines views and controllers, uses queue to
+ * receive messages and update game
  * 
  * @author Aleksandra, Ben, Jefferson
  *
@@ -28,14 +29,14 @@ public class Sudoku {
 			ex.printStackTrace();
 		}
 		sudoku = new View(queue);
-		String[] options = {"easy", "hard"};
-		int choice = JOptionPane.showOptionDialog(null, "Difficulty level",
-                "Choose Level of Difficulty",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-		if (choice==0)
+		String[] options = { "easy", "hard" };
+		int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		if (choice == 0)
 			game = new EasyGame();
 		else
 			game = new HardGame();
+		game.setStartTime(System.currentTimeMillis());
 		ButtonController controller = new ButtonController(sudoku, game, queue);
 		queue.clear();
 	}

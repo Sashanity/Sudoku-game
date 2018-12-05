@@ -12,7 +12,7 @@ public class SolutionCreator {
 		createBoard();
 		shuffleBoard(firstBoard);
 	}
-	
+
 	/**
 	 * 
 	 * @return the firstBoard; given is the original solved board
@@ -129,5 +129,5 @@ public class SolutionCreator {
 				n = (n % 9) + 1;
 		}
 	}
-	
+
 }

@@ -32,7 +32,9 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Creates button pad
-	 * @param queue takes messages that will result in updates in the game
+	 * 
+	 * @param queue
+	 *            takes messages that will result in updates in the game
 	 */
 	public ButtonPad(BlockingQueue<Message> queue) {
 		super(new BorderLayout());
@@ -138,10 +140,12 @@ public class ButtonPad extends JPanel {
 			panelNumbers.add(keypadNumbers[i]);
 		}
 	}
-	
+
 	/**
 	 * Action listeners that will track actions performed and update model
-	 * @param game the current game being played
+	 * 
+	 * @param game
+	 *            the current game being played
 	 */
 	public void addActionlisteners(Game game) {
 		for (int i = 0; i < 9; i++)
@@ -152,9 +156,10 @@ public class ButtonPad extends JPanel {
 				}
 			});
 	}
-	
+
 	/**
 	 * Gets solution button
+	 * 
 	 * @return solution button
 	 */
 	public JButton getSolutionButton() {
@@ -163,6 +168,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets new game button
+	 * 
 	 * @return new game button
 	 */
 	public JButton getNewGameButton() {
@@ -171,6 +177,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets exit button
+	 * 
 	 * @return exit button
 	 */
 	public JButton getExitButton() {
@@ -179,6 +186,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets help check box button
+	 * 
 	 * @return help check box
 	 */
 	public JCheckBox getHelpButton() {
@@ -187,6 +195,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets key pad
+	 * 
 	 * @return key pad
 	 */
 	public ButtonGroup getKeypad() {
@@ -195,6 +204,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets submit button
+	 * 
 	 * @return submit button
 	 */
 	public JButton getSubmitButton() {
@@ -203,6 +213,7 @@ public class ButtonPad extends JPanel {
 
 	/**
 	 * Gets keypad numbers
+	 * 
 	 * @return keypad numbers
 	 */
 	public JToggleButton[] getKeypadNumbers() {

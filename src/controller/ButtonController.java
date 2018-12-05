@@ -21,17 +21,21 @@ public class ButtonController {
 	private BlockingQueue<Message> queue;
 
 	/**
+	 * ButtonController ctor
 	 * 
-	 * @param sudoku main JFrame of the game sudoku
-	 * @param game   current game
+	 * @param sudoku
+	 *            main JFrame of the game sudoku
+	 * @param game
+	 *            current game
 	 * @param queue
+	 *            the queue to hold messages
 	 * @throws Exception
 	 */
 	public ButtonController(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.game = game;
 		this.queue = queue;
 		sudokuBoard = sudoku.getBoard();
-		sudokuBoard.setClues(game); 
+		sudokuBoard.setClues(game);
 		buttonPad = sudoku.getButtonPad();
 		sudokuBoard.addMouselisteners(game);
 		buttonPad.addActionlisteners(game);
@@ -40,12 +44,17 @@ public class ButtonController {
 
 	/**
 	 * 
-	 * @return a BlockingQueue object 
+	 * @return a BlockingQueue object
 	 */
 	public BlockingQueue<Message> getQueue() {
 		return queue;
 	}
 
+	/*
+	 * This loop will run while game is running in order to catch messages and send
+	 * them through the appropriate valve. This loop will end when the game is
+	 * exited.
+	 */
 	public void mainLoop() throws Exception {
 		valves.add(new DoNewGameValve());
 		valves.add(new ExitGameValve());
@@ -77,35 +86,35 @@ public class ButtonController {
 	private class DoNewGameValve implements Valve {
 
 		@Override
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see controller.Valve#execute(view.Message)
+		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS;
 			}
 			System.out.println("NEW GAME");
-			String[] options = {"easy", "hard"};
-			int choice = JOptionPane.showOptionDialog(null, "Difficulty level",
-	                "Choose Level of Difficulty",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-			
-			if (choice==0 && game.getDifficulty() == 0)
+			String[] options = { "easy", "hard" };
+			int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+			if (choice == 0 && game.getDifficulty() == 0)// if user chooses easy and difficulty was already easy, just
+															// create new game.
 				game.newGame();
-			else 
-				if (choice==0 && game.getDifficulty() == 1)
-					game = new EasyGame();
-			else 
-				if (choice==1 && game.getDifficulty() == 0)
-					game = new HardGame();
-			else
-				if (choice==1 && game.getDifficulty() == 1)
-					game.newGame();
-				
-
-
-				
-			game.newGame();// creates a new game
-			game.setStartTime(System.currentTimeMillis());// resets the game start time to
+			else if (choice == 0 && game.getDifficulty() == 1) // user chooses easy game, current difficulty is hard.
+				// change difficulty to easy by creating a new EasyGame
+				game = new EasyGame();
+			else if (choice == 1 && game.getDifficulty() == 0)// user chooses hard game, current difficulty is easy.
+				// change difficulty to hard by creating a new HardGame
+				game = new HardGame();
+			else if (choice == 1 && game.getDifficulty() == 1)// if user chooses hard and difficulty was already hard,
+																// just create new game.
+				game.newGame();
+			game.setStartTime(System.currentTimeMillis());// resets the game start time to 0
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
-			System.out.println("DoNewGameValve Executed");
+			System.out.println("Start New Game");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -116,17 +125,20 @@ public class ButtonController {
 	 */
 	private class ExitGameValve implements Valve {
 		@Override
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see controller.Valve#execute(view.Message)
+		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != ExitGameMessage.class) {
 				return ValveResponse.MISS;
 			}
 			System.out.println("EXIT");
 			System.exit(0);// exits the game
-			System.out.println("ExitGameValve Executed");
 			return ValveResponse.FINISH;// mainloop now finished
 		}
 	}
-
 
 	/**
 	 * Shows the games solution on the board
@@ -134,14 +146,18 @@ public class ButtonController {
 	 */
 	private class GetSolutionValve implements Valve {
 		@Override
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see controller.Valve#execute(view.Message)
+		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SolutionMessage.class) {
 				return ValveResponse.MISS;
 			}
 			sudokuBoard.setSolution(game);
-			game.resetScore();
+			game.resetScore();// resets the score to 0 because show solution takes away all possible points
 			System.out.println("Show Solution");
-			System.out.println("GetSolutionValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 	}
@@ -152,38 +168,47 @@ public class ButtonController {
 	 */
 	private class GetHelpValve implements Valve {
 		@Override
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see controller.Valve#execute(view.Message)
+		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != HelpMessage.class) {
 				return ValveResponse.MISS;
 			}
 
-			if (!game.isHelp()) {
+			if (!game.isHelp()) {// toggle on
 				game.setHelp(true);
 				System.out.println("Help on");
 				game.gameCheck();
 				sudokuBoard.setHelp(game);
-				game.subtractPoints();
+				game.subtractPoints();// remove 3 points
 			}
 
-			else {
+			else {// toggle off
+				System.out.println("Help off");
 				game.setHelp(false);
 				sudokuBoard.setHelp(game);
 
 			}
-
-			System.out.println("GetHelpValve Executed");
 			return ValveResponse.EXECUTED;
 		}
 
 	}
 
 	/**
-	 * 
+	 * Submits the game
 	 * 
 	 *
 	 */
 	private class SubmitGameValve implements Valve {
 		@Override
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see controller.Valve#execute(view.Message)
+		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SubmitGameMessage.class) {
 				return ValveResponse.MISS;
@@ -193,7 +218,5 @@ public class ButtonController {
 			return ValveResponse.EXECUTED;
 		}
 	}
-	
 
-	
 }

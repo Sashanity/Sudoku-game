@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  * @author Aleksandra, Ben, Jefferson
  *
  */
-public abstract  class Game  {
+public abstract class Game {
 	static final int SIZE = 9;
 	static final int MIN_NUM_CLUES = 17;
 	private int[][] solution;
@@ -34,10 +34,10 @@ public abstract  class Game  {
 		newGame();
 		help = false;
 		helpArray = new boolean[SIZE][SIZE];
-		
-		}
 
-	/** 
+	}
+
+	/**
 	 * Method that creates a new game. Generates new values for sudoku board.
 	 * 
 	 */
@@ -51,26 +51,16 @@ public abstract  class Game  {
 		// add clues
 		addClues(solution);
 		/*
-		for (int i = 0; i < MIN_NUM_CLUES; i++) {
-			randRow = new Random().nextInt(SIZE);
-			randCol = new Random().nextInt(SIZE);
-			value = solution[randRow][randCol];
-			if (game[randRow][randCol] == 0)
-				setValue(value, randRow, randCol);
-			else {
-				i--;
-			}
-		}
-		System.out.println();
-		
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				System.out.print(this.getGameArray()[i][j]);
-			}
-			System.out.println("");
-		}*/
+		 * for (int i = 0; i < MIN_NUM_CLUES; i++) { randRow = new
+		 * Random().nextInt(SIZE); randCol = new Random().nextInt(SIZE); value =
+		 * solution[randRow][randCol]; if (game[randRow][randCol] == 0) setValue(value,
+		 * randRow, randCol); else { i--; } } System.out.println();
+		 * 
+		 * for (int i = 0; i < 9; i++) { for (int j = 0; j < 9; j++) {
+		 * System.out.print(this.getGameArray()[i][j]); } System.out.println(""); }
+		 */
 	}
-	
+
 	abstract public void addClues(int[][] aSolution);
 
 	/**
@@ -84,7 +74,8 @@ public abstract  class Game  {
 	/**
 	 * Sets the 2d array of game to the current game array that is to be played
 	 * 
-	 * @param array the new 2d game array
+	 * @param array
+	 *            the new 2d game array
 	 */
 	public void setGameArray(int[][] array) {
 		for (int i = 0; i < 9; i++) {
@@ -101,13 +92,16 @@ public abstract  class Game  {
 	/**
 	 * Sets up the value of the cell from user
 	 * 
-	 * @param aValue is the number to set to a selected position
-	 * @param x      X position of cell
-	 * @param y      Y position of the cell
+	 * @param aValue
+	 *            is the number to set to a selected position
+	 * @param x
+	 *            X position of cell
+	 * @param y
+	 *            Y position of the cell
 	 */
 	public void setValue(int aValue, int r, int c) {
 		game[r][c] = aValue;
-		
+
 		System.out.println();
 
 		for (int i = 0; i < 9; i++) {
@@ -145,13 +139,14 @@ public abstract  class Game  {
 	/**
 	 * Method to set a cell based on the users input
 	 * 
-	 * @param keyPadNum Value that user selects from the button key pad
+	 * @param keyPadNum
+	 *            Value that user selects from the button key pad
 	 */
 	public void setUserInput(int keyPadNum) {
 		this.userInput = keyPadNum;
 
 	}
-	
+
 	/**
 	 * Gets the input of the user
 	 * 
@@ -173,7 +168,8 @@ public abstract  class Game  {
 	/**
 	 * Sets the start time of the application/game
 	 * 
-	 * @param n The starting time of the application/game
+	 * @param n
+	 *            The starting time of the application/game
 	 */
 	public void setStartTime(long n) {
 		startTime = n;
@@ -215,7 +211,8 @@ public abstract  class Game  {
 	/**
 	 * Checks if all cells in board are correct
 	 * 
-	 * @return A boolean determining whether or not the cells on the board are correct
+	 * @return A boolean determining whether or not the cells on the board are
+	 *         correct
 	 */
 	public boolean checkBoard() {
 		boolean gameFinished = true;

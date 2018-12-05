@@ -18,7 +18,10 @@ public class View extends JFrame {
 
 	/**
 	 * Construct UI of game, adding different view components together
-	 * @param queue used to hold messages that will be used to change stuff in the game
+	 * 
+	 * @param queue
+	 *            used to hold messages that will be used to change stuff in the
+	 *            game
 	 */
 	public View(BlockingQueue<Message> queue) {
 		super("SUDOKU");
@@ -74,7 +77,7 @@ public class View extends JFrame {
 				+ "The maximum score a user can have is 1000, while the minimum is 0." + "\n"
 				+ "When using help, each help toggle results in the user losing 3 points from their final score." + "\n"
 				+ "Meanwhile, using the submit button results in the user losing 1 point for every mistake made on the board.";
-		
+
 		rules.addActionListener((ActionEvent e) -> {
 			JOptionPane.showMessageDialog(null, sudokuRules, "How to Play Sudoku", JOptionPane.INFORMATION_MESSAGE);
 		});
@@ -99,6 +102,7 @@ public class View extends JFrame {
 
 	/**
 	 * Gets button pad
+	 * 
 	 * @return button pad
 	 */
 	public ButtonPad getButtonPad() {
@@ -107,6 +111,7 @@ public class View extends JFrame {
 
 	/**
 	 * Gets board
+	 * 
 	 * @return board
 	 */
 	public SudokuBoard getBoard() {

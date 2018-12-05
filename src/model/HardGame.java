@@ -3,7 +3,7 @@ package model;
 import java.util.Random;
 
 public class HardGame extends Game {
-	
+
 	public HardGame() {
 		super();
 		setDifficulty(1);
@@ -11,7 +11,7 @@ public class HardGame extends Game {
 
 	@Override
 	public void addClues(int[][] aSolution) {
-		int randRow,randCol, value;
+		int randRow, randCol, value;
 		for (int i = 0; i < MIN_NUM_CLUES; i++) {
 			randRow = new Random().nextInt(SIZE);
 			randCol = new Random().nextInt(SIZE);
@@ -22,7 +22,7 @@ public class HardGame extends Game {
 				i--;
 			}
 		}
-		
+
 	}
 
 }

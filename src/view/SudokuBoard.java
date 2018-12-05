@@ -47,6 +47,7 @@ public class SudokuBoard extends JPanel {
 
 	/**
 	 * Gets the cells for a board
+	 * 
 	 * @return the cells of a board
 	 */
 	public Cell[][] getCells() {
@@ -55,6 +56,7 @@ public class SudokuBoard extends JPanel {
 
 	/**
 	 * Gets the solution for a board
+	 * 
 	 * @return the solution of a board
 	 */
 	public Cell[][] getSolution() {
@@ -63,7 +65,9 @@ public class SudokuBoard extends JPanel {
 
 	/**
 	 * Method used for setting help in the board, enables help function
-	 * @param game current game being played
+	 * 
+	 * @param game
+	 *            current game being played
 	 */
 	public void setHelp(Game game) {
 		if (game.isHelp() == true) {
@@ -74,8 +78,7 @@ public class SudokuBoard extends JPanel {
 					else if (!cells[i][j].getBackground().equals(Color.GREEN))
 						cells[i][j].setBackground(Color.white);
 				}
-		}
-		else {
+		} else {
 			for (int i = 0; i < 9; i++)
 				for (int j = 0; j < 9; j++)
 					if (cells[i][j].getBackground().equals(Color.red))
@@ -85,7 +88,9 @@ public class SudokuBoard extends JPanel {
 
 	/**
 	 * Adds clues to the board
-	 * @param game current game being played
+	 * 
+	 * @param game
+	 *            current game being played
 	 */
 	public void setClues(Game game) {
 
@@ -102,7 +107,9 @@ public class SudokuBoard extends JPanel {
 
 	/**
 	 * Sets the board to display the solution
-	 * @param game current game being played
+	 * 
+	 * @param game
+	 *            current game being played
 	 */
 	public void setSolution(Game game) {
 		for (int i = 0; i < 9; i++) {
@@ -115,10 +122,12 @@ public class SudokuBoard extends JPanel {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds mouse listeners that will listen to user action events
-	 * @param game current game being played
+	 * 
+	 * @param game
+	 *            current game being played
 	 */
 	public void addMouselisteners(Game game) {
 		for (int y = 0; y < 9; y++) {
