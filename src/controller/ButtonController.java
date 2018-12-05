@@ -65,13 +65,13 @@ public class ButtonController {
 		Message message = null;
 		while (response != Valve.ValveResponse.FINISH) {
 			try {
-				message = queue.take();
+				message = queue.take();//take a message from the queue  (there will only be one at a time).
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			for (Valve valve : valves) {
+			for (Valve valve : valves) {//iterates through all valves to find which one the Message will trigger code execution in
 				response = valve.execute(message);
-				if (response != Valve.ValveResponse.MISS)
+				if (response != Valve.ValveResponse.MISS)//if code is executed, go back to the while loop
 					break;
 			}
 		}
@@ -93,7 +93,7 @@ public class ButtonController {
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != NewGameMessage.class) {
-				return ValveResponse.MISS;
+				return ValveResponse.MISS; // code will not execute
 			}
 			System.out.println("NEW GAME");
 			String[] options = { "easy", "hard" };
@@ -120,19 +120,20 @@ public class ButtonController {
 	}
 
 	/**
-	 * Exits the game
+	 * Exits the game and closes the window.
 	 * 
 	 */
 	private class ExitGameValve implements Valve {
 		@Override
 		/*
+		 * @param message the message received from queue
 		 * (non-Javadoc)
 		 * 
 		 * @see controller.Valve#execute(view.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != ExitGameMessage.class) {
-				return ValveResponse.MISS;
+				return ValveResponse.MISS; // code will not execute
 			}
 			System.out.println("EXIT");
 			System.exit(0);// exits the game
@@ -141,19 +142,20 @@ public class ButtonController {
 	}
 
 	/**
-	 * Shows the games solution on the board
+	 * Shows the game's solution on the sudokuboard.
 	 * 
 	 */
 	private class GetSolutionValve implements Valve {
 		@Override
 		/*
+		 * @param message the message received from queue
 		 * (non-Javadoc)
 		 * 
 		 * @see controller.Valve#execute(view.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SolutionMessage.class) {
-				return ValveResponse.MISS;
+				return ValveResponse.MISS;//code will not execute
 			}
 			sudokuBoard.setSolution(game);
 			game.resetScore();// resets the score to 0 because show solution takes away all possible points
@@ -163,19 +165,21 @@ public class ButtonController {
 	}
 
 	/**
-	 * Toggles help on or off Removes 3 points from score every time help is used
+	 * Toggles help on or off.
+	 * Removes 3 points from score every time help is used.
 	 *
 	 */
 	private class GetHelpValve implements Valve {
 		@Override
 		/*
+		 * @param message the message received from queue
 		 * (non-Javadoc)
 		 * 
 		 * @see controller.Valve#execute(view.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != HelpMessage.class) {
-				return ValveResponse.MISS;
+				return ValveResponse.MISS;//code will not execute
 			}
 
 			if (!game.isHelp()) {// toggle on
@@ -198,20 +202,21 @@ public class ButtonController {
 	}
 
 	/**
-	 * Submits the game
+	 * Submits the game and calls score on the game.
 	 * 
 	 *
 	 */
 	private class SubmitGameValve implements Valve {
 		@Override
 		/*
+		 * @param message the message received from queue
 		 * (non-Javadoc)
 		 * 
 		 * @see controller.Valve#execute(view.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SubmitGameMessage.class) {
-				return ValveResponse.MISS;
+				return ValveResponse.MISS;//code will not execute
 			}
 			game.score();
 			System.out.println("SubmitGameValve Executed");
