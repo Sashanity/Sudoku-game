@@ -1,4 +1,4 @@
-package view;
+package messages;
 
 import java.io.Serializable;
 

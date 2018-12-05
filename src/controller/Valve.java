@@ -1,6 +1,6 @@
 package controller;
 
-import view.Message;
+import messages.Message;
 
 /**
  * Used to process messages

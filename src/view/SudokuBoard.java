@@ -1,9 +1,12 @@
 package view;
 
 import java.awt.*;
+import java.util.concurrent.BlockingQueue;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import controller.Handler;
+import messages.Message;
 import model.Game;
 
 /**
@@ -17,6 +20,7 @@ public class SudokuBoard extends JPanel {
 	private Cell[][] cells;
 	private Cell[][] solution;
 	private JPanel[][] subBoards;
+	private BlockingQueue<Message> queue;
 
 	/**
 	 * Creates layout of sudoku board
@@ -122,7 +126,10 @@ public class SudokuBoard extends JPanel {
 			}
 		}
 	}
-
+	public void setQueue(BlockingQueue<Message> queue)
+	{
+		this.queue = queue;
+	}
 	/**
 	 * Adds mouse listeners that will listen to user action events
 	 * 
@@ -132,7 +139,7 @@ public class SudokuBoard extends JPanel {
 	public void addMouselisteners(Game game) {
 		for (int y = 0; y < 9; y++) {
 			for (int x = 0; x < 9; x++)
-				getCells()[y][x].addMouseListener(new Handler(game));
+				getCells()[y][x].addMouseListener(new Handler(queue));
 		}
 	}
 }

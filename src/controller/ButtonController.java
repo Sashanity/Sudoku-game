@@ -1,8 +1,11 @@
 package controller;
 
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 import javax.swing.JOptionPane;
+
+import messages.*;
 import model.*;
 import view.*;
 
@@ -60,6 +63,7 @@ public class ButtonController {
 		valves.add(new GetSolutionValve());
 		valves.add(new GetHelpValve());
 		valves.add(new SubmitGameValve());
+		valves.add(new UserInputValve());
 		Valve.ValveResponse response = Valve.ValveResponse.EXECUTED;
 		Message message = null;
 		while (response != Valve.ValveResponse.FINISH) {
@@ -89,7 +93,7 @@ public class ButtonController {
 		/**
 		 * (non-Javadoc)
 		 * 
-		 * @see controller.Valve#execute(view.Message)
+		 * @see controller.Valve#execute(messages.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != NewGameMessage.class) {
@@ -134,7 +138,7 @@ public class ButtonController {
 		/**
 		 * @param message the message received from queue (non-Javadoc)
 		 * 
-		 * @see controller.Valve#execute(view.Message)
+		 * @see controller.Valve#execute(messages.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != ExitGameMessage.class) {
@@ -153,7 +157,7 @@ public class ButtonController {
 		/**
 		 * @param message the message received from queue (non-Javadoc)
 		 * 
-		 * @see controller.Valve#execute(view.Message)
+		 * @see controller.Valve#execute(messages.Message)
 		 */
 		public ValveResponse execute(Message message) {
 			if (message.getClass() != SolutionMessage.class) {
@@ -210,7 +214,7 @@ public class ButtonController {
 		/**
 		 * @param message the message received from queue (non-Javadoc)
 		 * 
-		 * @see controller.Valve#execute(view.Message)
+		 * @see controller.Valve#execute(messages.Message)
 		 */
 
 		public ValveResponse execute(Message message) {
@@ -220,6 +224,34 @@ public class ButtonController {
 			game.score();
 			return ValveResponse.EXECUTED;
 		}
+	}
+	private class UserInputValve implements Valve{
+
+		public ValveResponse execute(Message message) {
+			if(message.getClass() != UserInputMessage.class) {
+				return ValveResponse.MISS; //code will not execute
+			}
+			UserInputMessage msg = (UserInputMessage) message;
+			System.out.print(msg.getCell().getValue()); //print value of givencell
+			System.out.print(",  " + game.getValue(msg.getY(), msg.getX())); //print value in the game int[][]
+			System.out.print(", " + sudokuBoard.getCells()[msg.getX()][msg.getY()].getValue()); //get value at sudokuBoard Cell[][]
+			System.out.println(msg.getCell().getForeground().toString()); //print color of this cell
+			if (sudokuBoard.getCells()[msg.getX()][msg.getY()].getValue() == 0 || msg.getCell().getForeground().equals(Color.BLUE)) {
+				game.setValue(game.getUserInput(), msg.getX(), msg.getY()); //for some reason had to switch x and y coords between getvalue and setvalue
+				//sudokuBoard.getCells()[msg.getX()][msg.getY()].setValue(game.getUserInput(), true);
+				msg.getCell().setValue(game.getUserInput(), true);
+				System.out.println("changed");
+			}
+			
+			/*if(game.getValue(msg.getY(), msg.getX()) == 0 ||msg.getCell().getForeground().equals(Color.BLUE)) {
+				game.setValue(game.getUserInput(), msg.getY(), msg.getX());
+				msg.getCell().setValue(game.getUserInput(), true);
+				sudokuBoard.getCells()[msg.getX()][msg.getY()].setValue(game.getUserInput(), true);
+			}
+			*/
+			return ValveResponse.EXECUTED;
+		}
+		
 	}
 
 }

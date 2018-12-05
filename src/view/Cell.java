@@ -18,7 +18,6 @@ public class Cell extends JLabel {
 	private int y;
 	private int value;
 	boolean isSelected;
-	boolean accessible = true;
 
 	/**
 	 * Constructor of a cell, settings of a cell

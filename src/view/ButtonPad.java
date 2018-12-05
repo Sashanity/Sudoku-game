@@ -22,6 +22,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+
+import messages.ExitGameMessage;
+import messages.HelpMessage;
+import messages.Message;
+import messages.NewGameMessage;
+import messages.SolutionMessage;
+import messages.SubmitGameMessage;
 import model.Game;
 
 public class ButtonPad extends JPanel {

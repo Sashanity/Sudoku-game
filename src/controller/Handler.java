@@ -4,7 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.BlockingQueue;
+
 import javax.swing.JLabel;
+
+import messages.Message;
+import messages.UserInputMessage;
 import model.Game;
 import view.Cell;
 
@@ -15,13 +20,14 @@ import view.Cell;
  */
 public class Handler extends MouseAdapter {
 	private Game game;
+	private BlockingQueue<Message> queue;
 
 	/**
 	 * 
 	 * @param game that Handler is modifying cells for
 	 */
-	public Handler(Game game) {
-		this.game = game;
+	public Handler( BlockingQueue<Message> queue) {
+		this.queue = queue;
 	}
 
 	@Override
@@ -36,12 +42,16 @@ public class Handler extends MouseAdapter {
 		Component component = aLabel.getComponentAt(e.getPoint());
 		if (component instanceof Cell) {
 			Cell aCell = (Cell) component;
-			int r = aCell.getCellX();
-			int c = aCell.getCellY();
-			if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
+			try {
+				queue.put(new UserInputMessage(aCell.getCellX() , aCell.getCellY(), aCell));
+			} catch (InterruptedException exception) {
+				exception.printStackTrace();
+			}
+			/*if (game.getValue(r, c) == 0 || aCell.getForeground().equals(Color.BLUE)) {
 				game.setValue(game.getUserInput(), c, r);
 				aCell.setValue(game.getUserInput(), true);
 			}
+			*/
 		}
 
 	}

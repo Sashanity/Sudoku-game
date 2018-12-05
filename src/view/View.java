@@ -6,6 +6,8 @@ import java.util.concurrent.BlockingQueue;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import messages.Message;
+
 /**
  * Class used for UI of the Game
  * 
@@ -90,6 +92,7 @@ public class View extends JFrame {
 
 		buttonPanel = new ButtonPad(queue);
 		sudokuBoard = new SudokuBoard();
+		sudokuBoard.setQueue(queue);
 
 		add(buttonPanel, BorderLayout.WEST);
 		add(sudokuBoard, BorderLayout.EAST);

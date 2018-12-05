@@ -1,4 +1,4 @@
-package view;
+package messages;
 
 /**
  * This is passed to GetHelpValve in order for it to execute its code.

@@ -5,6 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import controller.ButtonController;
+import messages.Message;
 import model.EasyGame;
 import model.Game;
 import model.HardGame;
