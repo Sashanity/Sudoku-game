@@ -83,8 +83,6 @@ public class View extends JFrame {
 		buttonPanel = new ButtonPad(queue);
 		sudokuBoard = new SudokuBoard();
 
-		buttonPanel.getNewGameButton().doClick();
-
 		add(buttonPanel, BorderLayout.WEST);
 		add(sudokuBoard, BorderLayout.EAST);
 
