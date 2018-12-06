@@ -4,7 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import controller.ButtonController;
+import controller.Controller;
 import messages.Message;
 import model.EasyGame;
 import model.Game;
@@ -30,7 +30,7 @@ public class Sudoku {
 			ex.printStackTrace();
 		}
 		sudoku = new View(queue);
-		String[] options = { "easy", "hard" };
+		String[] options = { "Easy", "Hard" };
 		int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 		if (choice == 0)
@@ -38,7 +38,7 @@ public class Sudoku {
 		else
 			game = new HardGame();
 		game.setStartTime(System.currentTimeMillis());
-		ButtonController controller = new ButtonController(sudoku, game, queue);
+		Controller controller = new Controller(sudoku, game, queue);
 		queue.clear();
 	}
 }

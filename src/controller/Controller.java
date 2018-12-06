@@ -15,7 +15,7 @@ import view.*;
  * 
  * @author Aleksandra, Ben, Jefferson
  */
-public class ButtonController {
+public class Controller {
 	private SudokuBoard sudokuBoard;
 	private ButtonPad buttonPad;
 	private Game game;
@@ -30,7 +30,7 @@ public class ButtonController {
 	 * @param queue  the queue to hold messages
 	 * @throws Exception
 	 */
-	public ButtonController(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
+	public Controller(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.game = game;
 		this.queue = queue;
 		sudokuBoard = sudoku.getBoard();
@@ -99,36 +99,27 @@ public class ButtonController {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS; // code will not execute
 			}
-			/*
-			String[] options = { "easy", "hard" };
+			
+			String[] options = { "Easy", "Hard" };
 			int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-			if (choice == 0 && game.getDifficulty() == 0)// if user chooses easy and difficulty was already easy, just
-															// create new game.
+			if(choice == game.getDifficulty()) {
 				game.newGame();
-			else if (choice == 0 && game.getDifficulty() == 1) // user chooses easy game, current difficulty is hard.
-				// change difficulty to easy by creating a new EasyGame
-			
-				game = new EasyGame();
-				
-			
-			
-			else if (choice == 1 && game.getDifficulty() == 0)// user chooses hard game, current difficulty is easy.
-				// change difficulty to hard by creating a new HardGame
-				game = new HardGame();
-			else if (choice == 1 && game.getDifficulty() == 1)// if user chooses hard and difficulty was already hard,
-					
-																// just create new game.
-				game.newGame();
-				*/
-			game.newGame();
+				sudokuBoard.setClues(game);
+			}
+			else {
+				if(choice == 0)
+					game = new EasyGame();
+				else
+					game = new HardGame();
+			}
 			game.setStartTime(System.currentTimeMillis());// resets the game start time to 0
+			buttonPad.addActionlisteners(game);
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
 			return ValveResponse.EXECUTED;
 		}
 	}
-
 	/**
 	 * Exits the game and closes the window.
 	 * 
