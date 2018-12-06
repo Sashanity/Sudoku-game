@@ -1,13 +1,5 @@
 package view;
 
-/**
- * Instance of the class is an object that includes 2 panels with
- * Main game buttons and Keypad buttons.
- *  
- * @author Aleksandra, Ben, Jefferson
- *
- */
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,12 +22,22 @@ import messages.SolutionMessage;
 import messages.SubmitGameMessage;
 import model.Game;
 
+/**
+ * Instance of the class is an object that includes 2 panels with
+ * Main game buttons and Keypad buttons.
+ *  
+ * @author Aleksandra, Ben, Jefferson
+ *
+ */
 public class ButtonPad extends JPanel {
 	private JButton solutionButton, newGameButton, exitButton, submitButton;
 	private JCheckBox helpButton;
 	private ButtonGroup keypad;
 	private JToggleButton[] keypadNumbers;
 	public BlockingQueue<Message> queue;
+	private JPanel panelGameButtons;
+	private JPanel panelKeyPad;
+	private JPanel containerPanel;
 
 	/**
 	 * Creates button pad
@@ -47,7 +49,7 @@ public class ButtonPad extends JPanel {
 		
 		//containerPanel is used to contain other panels 
 		//containing button pad panel and option panel
-		JPanel containerPanel = new JPanel();
+		containerPanel = new JPanel();
 		containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
 		add(containerPanel, BorderLayout.NORTH);
 
@@ -65,8 +67,8 @@ public class ButtonPad extends JPanel {
 	public JPanel createButtonPanel() {
 		
 		//Game options panel containing game buttons
-		JPanel panelGameOptions = new JPanel();
-		panelGameOptions.setLayout(new FlowLayout(FlowLayout.CENTER));
+		panelGameButtons = new JPanel();
+		panelGameButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
 		//Creates game buttons
 		createNewGameButton();
@@ -76,19 +78,24 @@ public class ButtonPad extends JPanel {
 		createHelpBox();
 		
 		//Adds game buttons to game panel
-		panelGameOptions.add(newGameButton);
-		panelGameOptions.add(solutionButton);
-		panelGameOptions.add(submitButton);
-		panelGameOptions.add(exitButton);
-		panelGameOptions.add(helpButton);
+		panelGameButtons.add(newGameButton);
+		panelGameButtons.add(solutionButton);
+		panelGameButtons.add(submitButton);
+		panelGameButtons.add(exitButton);
+		panelGameButtons.add(helpButton);
 		
-		return panelGameOptions;
+		return panelGameButtons;
 	}
 	
+	/**
+	 * Creates key panel consisting of numbers 1-9, used for user cell input into board
+	 * 
+	 * @return key pad/panel 
+	 */
 	public JPanel createKeyPanel() {
 		//Key pad panel consisting of numbers 1-9, used for user to change cells
-		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
-		panelNumbers.setPreferredSize(new Dimension(200, 400));
+		panelKeyPad = new JPanel(new GridLayout(3, 3));
+		panelKeyPad.setPreferredSize(new Dimension(200, 400));
 		
 		keypad = new ButtonGroup();
 		keypadNumbers = new JToggleButton[9];
@@ -97,10 +104,10 @@ public class ButtonPad extends JPanel {
 			keypadNumbers[i] = new JToggleButton("" + (i + 1));
 			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
 			keypad.add(keypadNumbers[i]);
-			panelNumbers.add(keypadNumbers[i]);
+			panelKeyPad.add(keypadNumbers[i]);
 		}
 		
-		return panelNumbers;
+		return panelKeyPad;
 	}
 	
 	/**
@@ -117,13 +124,15 @@ public class ButtonPad extends JPanel {
 				}
 			});
 	}
-	/*
-	 * clears JToggleButton selection
+
+	/**
+	 * Clears JToggleButton selection
 	 */
 	public void clearButtonSelection()
 	{
 		keypad.clearSelection();
 	}
+	
 	/**
 	 * Creates new game button, used to determine when a new game should be generated.
 	 * Sends a message to queue, to update board if button is clicked.
