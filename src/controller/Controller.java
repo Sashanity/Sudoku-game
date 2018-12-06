@@ -16,8 +16,8 @@ import view.*;
  * @author Aleksandra, Ben, Jefferson
  */
 public class Controller {
-	private SudokuPanel sudokuBoard;
-	private LeftPanel buttonPad;
+	private SudokuPanel sudokuBoard; // right panel with sudoku
+	private LeftPanel buttonPad; // left panel with all buttons and keys
 	private Game game;
 	private LinkedList<Valve> valves = new LinkedList<Valve>();
 	private BlockingQueue<Message> queue;
@@ -28,7 +28,7 @@ public class Controller {
 	 * @param sudoku main JFrame of the game sudoku
 	 * @param game   current game
 	 * @param queue  the queue to hold messages
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public Controller(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.game = game;
@@ -100,31 +100,32 @@ public class Controller {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS; // code will not execute
 			}
-			/*
-			 * Player will select the difficulty of the new game
-			 */
+
+			// Player will select the difficulty of the new game
 			String[] options = { "Easy", "Hard" };
 			int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-			if(choice == game.getDifficulty()) { //if it is the same difficulty as the previous game just start a new game
+			if (choice == game.getDifficulty()) { // if it is the same difficulty as the previous game just start a new
+													// game
 				game.newGame();
 				sudokuBoard.setClues(game);
-			}
-			else {
-				//if player chooses a difficulty different than previous game, first create a new instance of that gametype.
-				if(choice == 0)
+			} else {
+				// if player chooses a difficulty different than previous game, first create a
+				// new instance of that gametype.
+				if (choice == 0)
 					game = new EasyGame();
 				else
 					game = new HardGame();
 			}
 			game.setStartTime(System.currentTimeMillis());// resets the game start time to 0
-			buttonPad.addActionlisteners(game);//attaches buttonpad listeners to the new game
-			buttonPad.clearButtonSelection();//clears selection of jtogglebuttons
+			buttonPad.addActionlisteners(game);// attaches buttonpad listeners to the new game
+			buttonPad.clearButtonSelection();// clears selection of jtogglebuttons
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
 			return ValveResponse.EXECUTED;
 		}
 	}
+
 	/**
 	 * Exits the game and closes the window.
 	 * 
@@ -183,14 +184,14 @@ public class Controller {
 
 			if (!game.isHelp()) {// toggle on
 				game.setHelp(true);
-				//System.out.println("Help on");
+				// System.out.println("Help on");
 				game.gameCheck();
 				sudokuBoard.setHelp(game);
 				game.subtractPoints();// remove 3 points
 			}
 
 			else {// toggle off
-				//System.out.println("Help off");
+					// System.out.println("Help off");
 				game.setHelp(false);
 				sudokuBoard.setHelp(game);
 
@@ -221,55 +222,45 @@ public class Controller {
 			return ValveResponse.EXECUTED;
 		}
 	}
-	
+
 	/**
 	 * Valve for changing board based on user input
 	 * 
 	 */
-	private class UserInputValve implements Valve{
+	private class UserInputValve implements Valve {
 
 		public ValveResponse execute(Message message) {
-			if(message.getClass() != UserInputMessage.class) {
-				return ValveResponse.MISS; //code will not execute
+			if (message.getClass() != UserInputMessage.class) {
+				return ValveResponse.MISS; // code will not execute
 			}
 			UserInputMessage msg = (UserInputMessage) message;
-			System.out.print(msg.getCell().getValue()); //print value of givencell
-			System.out.print(",  " + game.getValue(msg.getY(), msg.getX())); //print value in the game int[][]
-			System.out.print(", " + sudokuBoard.getCells()[msg.getX()][msg.getY()].getValue()); //get value at sudokuBoard Cell[][]
-			System.out.println(msg.getCell().getForeground().toString()); //print color of this cell
-			if (sudokuBoard.getCells()[msg.getX()][msg.getY()].getValue() == 0 || msg.getCell().getForeground().equals(Color.BLUE)) {
-				game.setValue(game.getUserInput(), msg.getX(), msg.getY()); //for some reason had to switch x and y coords between getvalue and setvalue
-				//sudokuBoard.getCells()[msg.getX()][msg.getY()].setValue(game.getUserInput(), true);
+			if (sudokuBoard.getCells()[msg.getX()][msg.getY()].getValue() == 0
+					|| msg.getCell().getForeground().equals(Color.BLUE)) {
+				game.setValue(game.getUserInput(), msg.getX(), msg.getY()); // for some reason had to switch x and y
+																			// coords between getvalue and setvalue
 				msg.getCell().setValue(game.getUserInput(), true);
-				System.out.println("changed");
+
 			}
-			
-			/*if(game.getValue(msg.getY(), msg.getX()) == 0 ||msg.getCell().getForeground().equals(Color.BLUE)) {
-				game.setValue(game.getUserInput(), msg.getY(), msg.getX());
-				msg.getCell().setValue(game.getUserInput(), true);
-				sudokuBoard.getCells()[msg.getX()][msg.getY()].setValue(game.getUserInput(), true);
-			}
-			*/
+
 			return ValveResponse.EXECUTED;
 		}
 	}
-	
+
 	/**
 	 * Valve that clears a cell if a user right clicks the cell
 	 *
 	 */
 	private class RightClickValve implements Valve {
 		public ValveResponse execute(Message message) {
-			if(message.getClass() != RightClickMessage.class) {
-				return ValveResponse.MISS; //code will not execute
+			if (message.getClass() != RightClickMessage.class) {
+				return ValveResponse.MISS; // code will not execute
 			}
 			RightClickMessage msg = (RightClickMessage) message;
-			//If cell color is not green, make it so that the color can be set to yellow...
-			if(msg.getCell().getBackground().equals(Color.GREEN)) {
-			}
-			else {
-				game.setValue(0, msg.getX(), msg.getY()); //removes value from cell
-				msg.getCell().setBackground(Color.WHITE); //sets cell to white
+			// If cell color is not green, make it so that the color can be set to yellow...
+			if (msg.getCell().getBackground().equals(Color.GREEN)) {
+			} else {
+				game.setValue(0, msg.getX(), msg.getY()); // removes value from cell
+				msg.getCell().setBackground(Color.WHITE); // sets cell to white
 				msg.getCell().setValue(0, true);
 			}
 			return ValveResponse.EXECUTED;

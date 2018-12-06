@@ -1,4 +1,4 @@
-package view;
+package main;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -9,6 +9,7 @@ import messages.Message;
 import model.EasyGame;
 import model.Game;
 import model.HardGame;
+import view.View;
 
 /**
  * Class used for Sudoku game, combines views and controllers, uses queue to

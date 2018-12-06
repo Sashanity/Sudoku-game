@@ -23,9 +23,9 @@ import messages.SubmitGameMessage;
 import model.Game;
 
 /**
- * Instance of the class is an object that includes 2 panels with
- * Main game buttons and Keypad buttons.
- *  
+ * Instance of the class is an object that includes 2 panels with Main game
+ * buttons and Keypad buttons.
+ * 
  * @author Aleksandra, Ben, Jefferson
  *
  */
@@ -34,87 +34,92 @@ public class LeftPanel extends JPanel {
 	private JCheckBox helpButton;
 	private ButtonGroup keypad;
 	private JToggleButton[] keypadNumbers;
+	private JPanel containerPanel; // a container left panel that contains panelGameButtons and panelKeyPad
+	private JPanel panelGameButtons; // panel that holds main game buttons
+	private JPanel panelKeyPad; // panel that holds keys
+
 	public BlockingQueue<Message> queue;
-	private JPanel panelGameButtons;
-	private JPanel panelKeyPad;
-	private JPanel containerPanel;
 
 	/**
 	 * Creates button pad
+	 * 
 	 * @param queue takes messages that will result in updates in the game
 	 * 
 	 */
 	public LeftPanel(BlockingQueue<Message> queue) {
 		this.queue = queue;
-		
-		//containerPanel is used to contain other panels 
-		//containing button pad panel and option panel
+
+		// containerPanel is used to contain other panels
+		// containing button pad panel and option panel
 		containerPanel = new JPanel();
 		containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
 		add(containerPanel, BorderLayout.NORTH);
 
-		//Adding button panel to container panel
+		// Adding button panel to container panel
 		containerPanel.add(createButtonPanel());
-		
-		//Adding key pad panel (with key pad buttons numbers 1-9) to container panel
+
+		// Adding key pad panel (with key pad buttons numbers 1-9) to container panel
 		containerPanel.add(createKeyPanel());
 	}
-	
+
 	/**
-	 * Creates button panel consisting of different buttons such as new game, solution, etc.
-	 * @return button panel 
+	 * Creates button panel consisting of different buttons such as new game,
+	 * solution, etc.
+	 * 
+	 * @return button panel
 	 */
 	public JPanel createButtonPanel() {
-		
-		//Game options panel containing game buttons
+
+		// Game options panel containing game buttons
 		panelGameButtons = new JPanel();
 		panelGameButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
-		
-		//Creates game buttons
+
+		// Creates game buttons
 		createNewGameButton();
 		createSolutionButton();
 		createExitButton();
 		createSubmitButton();
 		createHelpBox();
-		
-		//Adds game buttons to game panel
+
+		// Adds game buttons to game panel
 		panelGameButtons.add(newGameButton);
 		panelGameButtons.add(solutionButton);
 		panelGameButtons.add(submitButton);
 		panelGameButtons.add(exitButton);
 		panelGameButtons.add(helpButton);
-		
+
 		return panelGameButtons;
 	}
-	
+
 	/**
-	 * Creates key panel consisting of numbers 1-9, used for user cell input into board
+	 * Creates key panel consisting of numbers 1-9, used for user cell input into
+	 * board
 	 * 
-	 * @return key pad/panel 
+	 * @return key pad/panel
 	 */
 	public JPanel createKeyPanel() {
-		//Key pad panel consisting of numbers 1-9, used for user to change cells
+		// Key pad panel consisting of numbers 1-9, used for user to change cells
 		panelKeyPad = new JPanel(new GridLayout(3, 3));
 		panelKeyPad.setPreferredSize(new Dimension(200, 400));
-		
+
 		keypad = new ButtonGroup();
 		keypadNumbers = new JToggleButton[9];
-		//Adds toggle buttons (1-9) to the key pad panel
+		// Adds toggle buttons (1-9) to the key pad panel
 		for (int i = 0; i < 9; i++) {
 			keypadNumbers[i] = new JToggleButton("" + (i + 1));
 			keypadNumbers[i].setPreferredSize(new Dimension(50, 50));
 			keypad.add(keypadNumbers[i]);
 			panelKeyPad.add(keypadNumbers[i]);
 		}
-		
+
 		return panelKeyPad;
 	}
-	
+
 	/**
 	 * Action listeners that will track actions performed and update model
 	 * 
-	 * @param game the current game being played 
-	 * @param game the current game being played 
+	 * @param game the current game being played
+	 * @param game the current game being played
 	 */
 	public void addActionlisteners(Game game) {
 		for (int i = 0; i < 9; i++)
@@ -128,14 +133,13 @@ public class LeftPanel extends JPanel {
 	/**
 	 * Clears JToggleButton selection
 	 */
-	public void clearButtonSelection()
-	{
+	public void clearButtonSelection() {
 		keypad.clearSelection();
 	}
-	
+
 	/**
-	 * Creates new game button, used to determine when a new game should be generated.
-	 * Sends a message to queue, to update board if button is clicked.
+	 * Creates new game button, used to determine when a new game should be
+	 * generated. Sends a message to queue, to update board if button is clicked.
 	 * 
 	 * @return new game button that has action listener
 	 */
@@ -153,10 +157,10 @@ public class LeftPanel extends JPanel {
 		});
 		return newGameButton;
 	}
-	
+
 	/**
-	 * Creates solution button, used to generate solution to board.
-	 * Sends a message to queue, to update board if button is clicked.
+	 * Creates solution button, used to generate solution to board. Sends a message
+	 * to queue, to update board if button is clicked.
 	 * 
 	 * @return solution button that has action listener
 	 */
@@ -175,10 +179,10 @@ public class LeftPanel extends JPanel {
 		});
 		return solutionButton;
 	}
-	
+
 	/**
-	 * Creates submit button, used to determine when a user submits their current work.
-	 * Sends a message to queue, to update board if button is clicked.
+	 * Creates submit button, used to determine when a user submits their current
+	 * work. Sends a message to queue, to update board if button is clicked.
 	 * 
 	 * @return submit button that has action listener
 	 */
@@ -197,10 +201,10 @@ public class LeftPanel extends JPanel {
 		});
 		return submitButton;
 	}
-	
+
 	/**
-	 * Creates exit button, used to determine when a user wishes to close application.
-	 * Sends message to queue, to close window after button is clicked.
+	 * Creates exit button, used to determine when a user wishes to close
+	 * application. Sends message to queue, to close window after button is clicked.
 	 * 
 	 * @return exit button that has action listener
 	 */
@@ -219,10 +223,11 @@ public class LeftPanel extends JPanel {
 		});
 		return exitButton;
 	}
-	
+
 	/**
-	 * Creates help check box, used to determine when a user wishes to view their mistakes.
-	 * Sends message to queue when box is checked, to display help for user.
+	 * Creates help check box, used to determine when a user wishes to view their
+	 * mistakes. Sends message to queue when box is checked, to display help for
+	 * user.
 	 * 
 	 * @return help check box that has action listener
 	 */
@@ -252,5 +257,5 @@ public class LeftPanel extends JPanel {
 	public JToggleButton[] getKeypadNumbers() {
 		return keypadNumbers;
 	}
-	
+
 }

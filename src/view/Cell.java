@@ -7,8 +7,6 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import controller.Constants;
-
 /**
  * Class represents a cell of the 9x9 sudoku board
  * 
@@ -16,10 +14,9 @@ import controller.Constants;
  *
  */
 public class Cell extends JLabel {
-	private int x;
-	private int y;
-	private int value;
-	boolean isSelected;
+	private int x; // x position of cell
+	private int y; // y position of cell
+	private int value; // number that cell holds
 
 	/**
 	 * Constructor of a cell, settings of a cell

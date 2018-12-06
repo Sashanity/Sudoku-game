@@ -14,14 +14,17 @@ package model;
 import javax.swing.JOptionPane;
 
 public abstract class Game {
-	static final int SIZE = 9;
-	static final int MIN_NUM_CLUES = 17;
-	private int[][] solution;
-	private int[][] game;
-	private int userInput;
-	private boolean[][] helpArray;
-	private boolean help;
-	private int difficulty;
+	static final int SIZE = 9; 				// standard sudoku size
+	static final int MIN_NUM_CLUES = 17; 	// minimal valid number of clues to set of on the board
+	private int[][] solution; 				// 2D solved sudoku
+	private int[][] game;					// currernt game array
+	private int userInput; 					// number that user chose from the Keypad
+	private boolean[][] helpArray; 			// boolean array holds corresponding values if the game elements are identical
+											// to solution
+	private boolean help; 					// boolean help flag on/off
+	private int difficulty; 				// level of difficulty (0 or 1)
+
+	// these fileds are used to calculate score
 	long startTime;
 	long endTime;
 	int totalMistakes = 0;

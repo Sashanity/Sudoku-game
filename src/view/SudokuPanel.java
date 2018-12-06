@@ -6,7 +6,6 @@ import java.util.concurrent.BlockingQueue;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import controller.Constants;
 import controller.Handler;
 import messages.Message;
 import model.Game;
@@ -20,8 +19,7 @@ import model.Game;
 public class SudokuPanel extends JPanel {
 	public static final int SIZE = 3;
 	private Cell[][] cells;
-	private Cell[][] solution;
-	private JPanel[][] subBoards;
+	private JPanel[][] subBoards; // blocks of cells 3x3
 	private BlockingQueue<Message> queue;
 
 	/**
@@ -40,11 +38,10 @@ public class SudokuPanel extends JPanel {
 				add(subBoards[row][col]);
 			}
 		}
-		solution = new Cell[9][9];
+
 		cells = new Cell[9][9];
 		for (int row = 0; row < 9; row++) {
 			for (int col = 0; col < 9; col++) {
-				solution[row][col] = new Cell(col, row);
 				cells[row][col] = new Cell(col, row);
 				subBoards[row / 3][col / 3].add(cells[row][col]);
 			}
@@ -61,19 +58,9 @@ public class SudokuPanel extends JPanel {
 	}
 
 	/**
-	 * Gets the solution for a board
-	 * 
-	 * @return the solution of a board
-	 */
-	/*public Cell[][] getSolution() {
-		return solution;
-	}*/
-
-	/**
 	 * Method used for setting help in the board, enables help function
 	 * 
-	 * @param game
-	 *            current game being played
+	 * @param game current game being played
 	 */
 	public void setHelp(Game game) {
 		if (game.isHelp() == true) {
@@ -95,8 +82,7 @@ public class SudokuPanel extends JPanel {
 	/**
 	 * Adds clues to the board
 	 * 
-	 * @param game
-	 *            current game being played
+	 * @param game current game being played
 	 */
 	public void setClues(Game game) {
 
@@ -114,8 +100,7 @@ public class SudokuPanel extends JPanel {
 	/**
 	 * Sets the board to display the solution
 	 * 
-	 * @param game
-	 *            current game being played
+	 * @param game current game being played
 	 */
 	public void setSolution(Game game) {
 		for (int i = 0; i < 9; i++) {
@@ -128,17 +113,15 @@ public class SudokuPanel extends JPanel {
 			}
 		}
 	}
-	
-	public void setQueue(BlockingQueue<Message> queue)
-	{
+
+	public void setQueue(BlockingQueue<Message> queue) {
 		this.queue = queue;
 	}
-	
+
 	/**
 	 * Adds mouse listeners that will listen to user action events
 	 * 
-	 * @param game
-	 *            current game being played
+	 * @param game current game being played
 	 */
 	public void addMouselisteners(Game game) {
 		for (int y = 0; y < 9; y++) {
@@ -146,4 +129,6 @@ public class SudokuPanel extends JPanel {
 				getCells()[y][x].addMouseListener(new Handler(queue));
 		}
 	}
+	
+	
 }
