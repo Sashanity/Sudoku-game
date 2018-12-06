@@ -17,7 +17,7 @@ import model.Game;
  * @author Aleksandra, Ben, Jefferson
  *
  */
-public class SudokuBoard extends JPanel {
+public class SudokuPanel extends JPanel {
 	public static final int SIZE = 3;
 	private Cell[][] cells;
 	private Cell[][] solution;
@@ -25,9 +25,9 @@ public class SudokuBoard extends JPanel {
 	private BlockingQueue<Message> queue;
 
 	/**
-	 * Creates layout of sudoku board
+	 * Creates layout of sudoku board in a panel
 	 */
-	public SudokuBoard() {
+	public SudokuPanel() {
 		super(new GridLayout(3, 3));
 		subBoards = new JPanel[SIZE][SIZE];
 		for (int row = 0; row < SIZE; row++) {

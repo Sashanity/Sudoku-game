@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import view.SudokuBoard;
+import view.SudokuPanel;
 
 class SolutionCreatorTest {
 
@@ -17,7 +17,7 @@ class SolutionCreatorTest {
 
 	@Test
 	void setSolutionTest() throws Exception {
-		SudokuBoard sudokuBoard = new SudokuBoard();
+		SudokuPanel sudokuBoard = new SudokuPanel();
 		HardGame game = new HardGame();
 		sudokuBoard.setSolution(game);
 		assertArrayEquals(game.getGameArray(), game.getSolution());

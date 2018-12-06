@@ -15,8 +15,8 @@ import messages.Message;
  *
  */
 public class View extends JFrame {
-	private ButtonPad buttonPanel;
-	private SudokuBoard sudokuBoard;
+	private LeftPanel buttonPanel; //LeftPanel will hold all the buttons
+	private SudokuPanel sudokuBoard; //SudokuPanel will display the game
 
 	/**
 	 * Construct UI of game, adding different view components together
@@ -62,8 +62,8 @@ public class View extends JFrame {
 			JOptionPane.showMessageDialog(null, Constants.scoreDeets, "How Scoring Works", JOptionPane.INFORMATION_MESSAGE);
 		});
 
-		buttonPanel = new ButtonPad(queue);
-		sudokuBoard = new SudokuBoard();
+		buttonPanel = new LeftPanel(queue);
+		sudokuBoard = new SudokuPanel();
 		sudokuBoard.setQueue(queue);
 
 		add(buttonPanel, BorderLayout.WEST);
@@ -79,7 +79,7 @@ public class View extends JFrame {
 	 * 
 	 * @return button pad
 	 */
-	public ButtonPad getButtonPad() {
+	public LeftPanel getButtonPad() {
 		return buttonPanel;
 	}
 
@@ -88,7 +88,7 @@ public class View extends JFrame {
 	 * 
 	 * @return board
 	 */
-	public SudokuBoard getBoard() {
+	public SudokuPanel getBoard() {
 		return sudokuBoard;
 	}
 }

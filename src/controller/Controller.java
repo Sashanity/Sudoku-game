@@ -16,8 +16,8 @@ import view.*;
  * @author Aleksandra, Ben, Jefferson
  */
 public class Controller {
-	private SudokuBoard sudokuBoard;
-	private ButtonPad buttonPad;
+	private SudokuPanel sudokuBoard;
+	private LeftPanel buttonPad;
 	private Game game;
 	private LinkedList<Valve> valves = new LinkedList<Valve>();
 	private BlockingQueue<Message> queue;
@@ -100,16 +100,19 @@ public class Controller {
 			if (message.getClass() != NewGameMessage.class) {
 				return ValveResponse.MISS; // code will not execute
 			}
-			
+			/*
+			 * Player will select the difficulty of the new game
+			 */
 			String[] options = { "Easy", "Hard" };
 			int choice = JOptionPane.showOptionDialog(null, "Difficulty level", "Choose Level of Difficulty",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
-			if(choice == game.getDifficulty()) {
+			if(choice == game.getDifficulty()) { //if it is the same difficulty as the previous game just start a new game
 				game.newGame();
 				sudokuBoard.setClues(game);
 			}
 			else {
+				//if player chooses a difficulty different than previous game, first create a new instance of that gametype.
 				if(choice == 0)
 					game = new EasyGame();
 				else

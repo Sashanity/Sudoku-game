@@ -29,7 +29,7 @@ import model.Game;
  * @author Aleksandra, Ben, Jefferson
  *
  */
-public class ButtonPad extends JPanel {
+public class LeftPanel extends JPanel {
 	private JButton solutionButton, newGameButton, exitButton, submitButton;
 	private JCheckBox helpButton;
 	private ButtonGroup keypad;
@@ -44,7 +44,7 @@ public class ButtonPad extends JPanel {
 	 * @param queue takes messages that will result in updates in the game
 	 * 
 	 */
-	public ButtonPad(BlockingQueue<Message> queue) {
+	public LeftPanel(BlockingQueue<Message> queue) {
 		this.queue = queue;
 		
 		//containerPanel is used to contain other panels 
