@@ -1,4 +1,5 @@
-controller
-messages
-model
-view
+edu.sjsu.cs.cs151.controller
+edu.sjsu.cs.cs151.main
+edu.sjsu.cs.cs151.model
+edu.sjsu.cs.cs151.view
+edu.sjsu.cs.cs151.view.messages
