@@ -79,6 +79,7 @@ public class View extends JFrame {
 				+ "When using help, each help toggle results in the user losing 3 points from their final score." + "\n"
 				+ "Meanwhile, using the submit button results in the user losing 1 point for every mistake made on the board.";
 
+		//Action listeners for if user clicks on menu item, displays pop up window
 		rules.addActionListener((ActionEvent e) -> {
 			JOptionPane.showMessageDialog(null, sudokuRules, "How to Play Sudoku", JOptionPane.INFORMATION_MESSAGE);
 		});

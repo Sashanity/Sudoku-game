@@ -43,23 +43,30 @@ public class ButtonPad extends JPanel {
 	 * 
 	 */
 	public ButtonPad(BlockingQueue<Message> queue) {
-		//super(new BorderLayout());
 		this.queue = queue;
 		
-		//aPanel is used to contain other panels 
+		//containerPanel is used to contain other panels 
 		//containing button pad panel and option panel
 		JPanel containerPanel = new JPanel();
 		containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
 		add(containerPanel, BorderLayout.NORTH);
 
+		//Adding button panel to container panel
+		containerPanel.add(createButtonPanel());
+		
+		//Adding key pad panel (with key pad buttons numbers 1-9) to container panel
+		containerPanel.add(createKeyPanel());
+	}
+	
+	/**
+	 * Creates button panel consisting of different buttons such as new game, solution, etc.
+	 * @return button panel 
+	 */
+	public JPanel createButtonPanel() {
+		
 		//Game options panel containing game buttons
 		JPanel panelGameOptions = new JPanel();
 		panelGameOptions.setLayout(new FlowLayout(FlowLayout.CENTER));
-		containerPanel.add(panelGameOptions);
-
-		// ------------------
-		// MAIN BUTTONS OF THE GAME
-		// ------------------
 		
 		//Creates game buttons
 		createNewGameButton();
@@ -74,17 +81,15 @@ public class ButtonPad extends JPanel {
 		panelGameOptions.add(submitButton);
 		panelGameOptions.add(exitButton);
 		panelGameOptions.add(helpButton);
-
-		// ------------------
-		// KEY BUTTONS
-		// ------------------
 		
+		return panelGameOptions;
+	}
+	
+	public JPanel createKeyPanel() {
 		//Key pad panel consisting of numbers 1-9, used for user to change cells
 		JPanel panelNumbers = new JPanel(new GridLayout(3, 3));
 		panelNumbers.setPreferredSize(new Dimension(200, 400));
 		
-		//Adding key pad panel (with key pad buttons numbers 1-9)
-		containerPanel.add(panelNumbers);
 		keypad = new ButtonGroup();
 		keypadNumbers = new JToggleButton[9];
 		//Adds toggle buttons (1-9) to the key pad panel
@@ -94,6 +99,8 @@ public class ButtonPad extends JPanel {
 			keypad.add(keypadNumbers[i]);
 			panelNumbers.add(keypadNumbers[i]);
 		}
+		
+		return panelNumbers;
 	}
 	
 	/**

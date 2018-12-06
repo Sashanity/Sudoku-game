@@ -63,9 +63,9 @@ public class SudokuBoard extends JPanel {
 	 * 
 	 * @return the solution of a board
 	 */
-	public Cell[][] getSolution() {
+	/*public Cell[][] getSolution() {
 		return solution;
-	}
+	}*/
 
 	/**
 	 * Method used for setting help in the board, enables help function
@@ -126,10 +126,12 @@ public class SudokuBoard extends JPanel {
 			}
 		}
 	}
+	
 	public void setQueue(BlockingQueue<Message> queue)
 	{
 		this.queue = queue;
 	}
+	
 	/**
 	 * Adds mouse listeners that will listen to user action events
 	 * 
