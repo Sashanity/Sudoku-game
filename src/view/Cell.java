@@ -7,6 +7,8 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
+import controller.Constants;
+
 /**
  * Class represents a cell of the 9x9 sudoku board
  * 
@@ -31,7 +33,7 @@ public class Cell extends JLabel {
 		this.y = y;
 		setPreferredSize(new Dimension(50, 50));
 		setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		setBackground(Color.WHITE);
+		setBackground(Constants.BASIC_COLOR);
 		setFont(new Font(Font.DIALOG, Font.BOLD, 20));
 		setOpaque(true);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -44,7 +46,7 @@ public class Cell extends JLabel {
 	 * @param userInput Determines whether or not cell should be changed
 	 */
 	public void setValue(int num, boolean userInput) {
-		setForeground(userInput ? Color.BLUE : Color.BLACK);
+		setForeground(userInput ? Constants.USER_COLOR : Constants.COMP_COLOR);
 		setText(num > 0 ? num + "" : "");
 		value = num;
 	}

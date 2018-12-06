@@ -5,6 +5,8 @@ import java.util.concurrent.BlockingQueue;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
+import controller.Constants;
 import controller.Handler;
 import messages.Message;
 import model.Game;
@@ -78,15 +80,15 @@ public class SudokuBoard extends JPanel {
 			for (int i = 0; i < 9; i++)
 				for (int j = 0; j < 9; j++) {
 					if (game.getHelpArray()[i][j] == false)
-						cells[i][j].setBackground(Color.red);
-					else if (!cells[i][j].getBackground().equals(Color.GREEN))
-						cells[i][j].setBackground(Color.white);
+						cells[i][j].setBackground(Constants.WRONG_COLOR);
+					else if (!cells[i][j].getBackground().equals(Constants.CLUE_COLOR))
+						cells[i][j].setBackground(Constants.BASIC_COLOR);
 				}
 		} else {
 			for (int i = 0; i < 9; i++)
 				for (int j = 0; j < 9; j++)
-					if (cells[i][j].getBackground().equals(Color.red))
-						cells[i][j].setBackground(Color.white);
+					if (cells[i][j].getBackground().equals(Constants.WRONG_COLOR))
+						cells[i][j].setBackground(Constants.BASIC_COLOR);
 		}
 	}
 
@@ -100,10 +102,10 @@ public class SudokuBoard extends JPanel {
 
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				cells[i][j].setBackground(Color.white);
+				cells[i][j].setBackground(Constants.BASIC_COLOR);
 				cells[i][j].setValue(game.getGameArray()[i][j], false);
 				if (game.getGameArray()[i][j] != 0) {
-					cells[i][j].setBackground(Color.green);
+					cells[i][j].setBackground(Constants.CLUE_COLOR);
 				}
 			}
 		}
@@ -118,8 +120,8 @@ public class SudokuBoard extends JPanel {
 	public void setSolution(Game game) {
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++) {
-				if (!cells[i][j].getBackground().equals(Color.green)) {
-					cells[i][j].setBackground(Color.white);
+				if (!cells[i][j].getBackground().equals(Constants.CLUE_COLOR)) {
+					cells[i][j].setBackground(Constants.BASIC_COLOR);
 					game.setGameArray(game.getSolution());
 					cells[i][j].setValue(game.getGameArray()[i][j], false);
 				}
