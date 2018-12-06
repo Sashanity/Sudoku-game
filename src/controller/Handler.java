@@ -7,8 +7,10 @@ import java.awt.event.MouseEvent;
 import java.util.concurrent.BlockingQueue;
 
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import messages.Message;
+import messages.RightClickMessage;
 import messages.UserInputMessage;
 import model.Game;
 import view.Cell;
@@ -53,7 +55,17 @@ public class Handler extends MouseAdapter {
 			}
 			*/
 		}
-
+		if(SwingUtilities.isRightMouseButton(e)) {
+			if (component instanceof Cell) {
+				Cell aCell = (Cell) component;
+				// Create message for Right-click
+				try {
+					queue.put(new RightClickMessage(aCell.getCellX(), aCell.getCellY(), aCell));
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
 	}
-
 }

@@ -28,7 +28,7 @@ public class Controller {
 	 * @param sudoku main JFrame of the game sudoku
 	 * @param game   current game
 	 * @param queue  the queue to hold messages
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	public Controller(View sudoku, Game game, BlockingQueue<Message> queue) throws Exception {
 		this.game = game;
@@ -64,6 +64,7 @@ public class Controller {
 		valves.add(new GetHelpValve());
 		valves.add(new SubmitGameValve());
 		valves.add(new UserInputValve());
+		valves.add(new RightClickValve());
 		Valve.ValveResponse response = Valve.ValveResponse.EXECUTED;
 		Message message = null;
 		while (response != Valve.ValveResponse.FINISH) {
@@ -217,6 +218,11 @@ public class Controller {
 			return ValveResponse.EXECUTED;
 		}
 	}
+	
+	/**
+	 * Valve for changing board based on user input
+	 * 
+	 */
 	private class UserInputValve implements Valve{
 
 		public ValveResponse execute(Message message) {
@@ -243,7 +249,28 @@ public class Controller {
 			*/
 			return ValveResponse.EXECUTED;
 		}
-		
+	}
+	
+	/**
+	 * Valve that clears a cell if a user right clicks the cell
+	 *
+	 */
+	private class RightClickValve implements Valve {
+		public ValveResponse execute(Message message) {
+			if(message.getClass() != RightClickMessage.class) {
+				return ValveResponse.MISS; //code will not execute
+			}
+			RightClickMessage msg = (RightClickMessage) message;
+			//If cell color is not green, make it so that the color can be set to yellow...
+			if(msg.getCell().getBackground().equals(Color.GREEN)) {
+			}
+			else {
+				game.setValue(0, msg.getX(), msg.getY()); //removes value from cell
+				msg.getCell().setBackground(Color.WHITE); //sets cell to white
+				msg.getCell().setValue(0, true);
+			}
+			return ValveResponse.EXECUTED;
+		}
 	}
 
 }
