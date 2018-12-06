@@ -115,7 +115,8 @@ public class Controller {
 					game = new HardGame();
 			}
 			game.setStartTime(System.currentTimeMillis());// resets the game start time to 0
-			buttonPad.addActionlisteners(game);
+			buttonPad.addActionlisteners(game);//attaches buttonpad listeners to the new game
+			buttonPad.clearButtonSelection();//clears selection of jtogglebuttons
 			sudokuBoard.setClues(game);// sets the view to display the clues on sudokoboard
 			return ValveResponse.EXECUTED;
 		}

@@ -117,7 +117,13 @@ public class ButtonPad extends JPanel {
 				}
 			});
 	}
-
+	/*
+	 * clears JToggleButton selection
+	 */
+	public void clearButtonSelection()
+	{
+		keypad.clearSelection();
+	}
 	/**
 	 * Creates new game button, used to determine when a new game should be generated.
 	 * Sends a message to queue, to update board if button is clicked.
